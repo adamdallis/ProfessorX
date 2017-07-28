@@ -1,19 +1,34 @@
 {
   "name": "ProfessorX",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "ts-node": "ts-node"
-  },
-  "author": "",
-  "license": "ISC",
+  "version": "0.0.0",
+  "description": "Typescript mutation testing service",
+  "author": "James Read, Michael Michaelides",
+  "license": "MIT",
   "dependencies": {
+    "mochawesome": "^2.3.0",
     "ntypescript": "^1.201706190042.1",
-    "typescript": "^2.4.1"
+    "@types/node": "^8.0.14",
+    "typescript": "^2.3.2"
   },
   "devDependencies": {
-    "@types/node": "^8.0.14",
-    "ts-node": "^3.2.0"
+    "@types/chai": "^4.0.1",
+    "@types/mocha": "^2.2.41",
+    "chai": "^4.1.0",
+    "mocha": "^3.4.2",
+    "ts-node": "^3.2.0",
+    "tslint": "^5.5.0",
+    "typings": "^2.1.1"
+  },
+  "scripts": {
+    "test": "mocha --opts ./mocha.opts",
+    "test:watch": "mocha --opts ./mocha.opts --watch",
+    "build": "tsc index.ts",
+    "lint": "tslint ./src/**/*.ts",
+    "start": "ts-node ./src/mocha-TestRunner/Mocha-TestRunner.ts",
+    "ts-node": "ts-node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adamdallis/ProfessorX"
   }
 }
