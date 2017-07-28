@@ -10,7 +10,6 @@ describe("Mocha-TestRunner", () => {
 
     it("when given 1 test file returns 1 filename", () => {
         const fakeFileNames = ["filename1.spec"];
-        testRunner.testDirPath = fakeFileNames[0];
         testRunner.addFiles(fakeFileNames);
         expect(testRunner.testFiles.length).to.equal(1);
     });
@@ -19,6 +18,13 @@ describe("Mocha-TestRunner", () => {
         const fakeFileNames = ["filename1.spec", "filename2.spec"];
         testRunner.addFiles(fakeFileNames);
         expect(testRunner.testFiles.length).to.equal(2);
+    });
+
+    it("when given 2 test files returns file names equal inputed plus origional dir path", () => {
+        const fakeFileNames = ["filename1.spec", "filename2.spec"];
+        testRunner.addFiles(fakeFileNames);
+        expect(testRunner.testFiles[0]).to.equal(testRunner.testDirPath + fakeFileNames[0]);
+        expect(testRunner.testFiles[1]).to.equal(testRunner.testDirPath + fakeFileNames[1]);
     });
 
     it("a string of spec should return true", () => {
