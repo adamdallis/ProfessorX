@@ -27,6 +27,13 @@ describe("Mocha-TestRunner", () => {
         expect(testRunner.testFiles[1]).to.equal(testRunner.testDirPath + fakeFileNames[1]);
     });
 
+    it("when given no file names, it should throw an error", () => {
+        const fakeFileNames = [];
+        expect(() => {
+            testRunner.addFiles(fakeFileNames);
+        }).to.throw();
+    });
+
     it("a string of spec should return true", () => {
         const testSpecFile = ".spec";
         const actual = testRunner.isTestFile(testSpecFile);

@@ -26,6 +26,8 @@ export class MochaTestRunner {
 
     run () {
         this.addFiles(fs.readdirSync(this.testDirPath));
+        //TODO REMOVE MOCHA RUN INTO OWN FUNCTION
+        //SO THAT ADDFILES CAN ABORT TEST RUN
         let runner;
         runner = this.mocha.run(() => {
             const testResult: ITestResult = this.createTestResult(runner.stats);
@@ -59,9 +61,9 @@ export class MochaTestRunner {
                 this.mocha.addFile(this.testDirPath + fileName);
             }
         });
+        if (this.testFiles.length === 0){
+            throw new Error("Aborting Mocha test run, no test files found");
+        }
     }
 
 }
-
-const m = new MochaTestRunner();
-m.run();
