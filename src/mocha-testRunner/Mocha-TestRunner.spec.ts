@@ -8,6 +8,19 @@ describe("Mocha-TestRunner", () => {
         testRunner = new MochaTestRunner();
     });
 
+    it("when given 1 test file returns 1 filename", () => {
+        const fakeFileNames = ["filename1.spec"];
+        testRunner.testDirPath = fakeFileNames[0];
+        testRunner.addFiles(fakeFileNames);
+        expect(testRunner.testFiles.length).to.equal(1);
+    });
+
+    it("when given 2 test files returns 2 filenames", () => {
+        const fakeFileNames = ["filename1.spec", "filename2.spec"];
+        testRunner.addFiles(fakeFileNames);
+        expect(testRunner.testFiles.length).to.equal(2);
+    });
+
     it("a string of spec should return true", () => {
         const testSpecFile = ".spec";
         const actual = testRunner.isTestFile(testSpecFile);

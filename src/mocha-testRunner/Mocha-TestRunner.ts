@@ -8,11 +8,11 @@ import * as fs from "fs";
 
 export class MochaTestRunner {
 
+    testDirPath = "C:/git/ProfessorX/testProject/src/";
     testResult: ITestResult;
+    testFiles: Array<string> = [];
 
-    private readonly PATH: string = "C:/git/ProfessorX/testProject/src/";
     private readonly REPORT_TITLE: string = "MUTATION TEST REPORT";
-    private testFiles: Array<string> = [];
 
     private mocha = new Mocha({
         reporter: "mochawesome",
@@ -25,32 +25,22 @@ export class MochaTestRunner {
     private readonly printer = new Printer();
 
     run () {
-        this.addFiles();
+        this.addFiles(fs.readdirSync(this.testDirPath));
         let runner;
         runner = this.mocha.run(() => {
             const testResult: ITestResult = this.createTestResult(runner.stats);
-            this.setStore(testResult);
+            OutputStore.setStore(testResult, this.testFiles);
             this.printer.printSourceChanges();
         });
     }
-
 
     isTestFile (filePath: string): boolean {
         return filePath.indexOf(".spec") >= 0;
     }
 
-    private addFiles () {
-        fs.readdirSync(this.PATH).forEach((fileName) => {
-            if (this.isTestFile(fileName)) {
-                //  this.testFiles.push(this.PATH + fileName);
-                 this.mocha.addFile(this.PATH + fileName);
-            }
-        });
-    }
-
-    private createTestResult (stats): ITestResult {
+    createTestResult (stats): ITestResult {
         if (stats === void 0){
-            throw new Error("stats is undefined");
+            throw new Error("Test result is undefined");
         }
         const result =
         {
@@ -62,11 +52,16 @@ export class MochaTestRunner {
         return result;
     }
 
-    private setStore (testResult: ITestResult){
-        this.testFiles.forEach((element) => {
-            OutputStore.sourceFile = this.testFiles[element];
+    addFiles (arrayOfFileNames: Array<string>) {
+        arrayOfFileNames.forEach((fileName) => {
+            if (this.isTestFile(fileName)) {
+                this.testFiles.push(this.testDirPath + fileName);
+                this.mocha.addFile(this.testDirPath + fileName);
+            }
         });
-        OutputStore.numberOfPassedTests = testResult.passed;
-        OutputStore.numberOfFailedTests = testResult.failed;
     }
+
 }
+
+const m = new MochaTestRunner();
+m.run();
