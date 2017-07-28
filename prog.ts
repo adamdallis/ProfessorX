@@ -1,12 +1,16 @@
 import * as ts from "typescript";
 
-import { FileReader } from "./FileReader";
-import { MutationFinder } from "./MutationFinder";
+import { FileHandler } from "./FileHandler";
+import { CodeInspector } from "./CodeInspector";
+import { SourceFileObject } from "./SourceFileObject";
 
-let obj = new FileReader();
+let obj = new FileHandler();
 obj.readFile("./sample.ts");
-console.log(obj.getSourceCode());
-console.log(obj.getSourceFile());
-let obj1 = new MutationFinder(obj.getSourceFile());
-console.log(obj1.findObjectsOfSyntaxKind(ts.SyntaxKind.PlusToken));
-
+let sourceObj = new SourceFileObject(obj.getSourceObject());
+let mf = new CodeInspector(obj.getSourceObject());
+const list = mf.findObjectsOfSyntaxKind(ts.SyntaxKind.PlusToken);
+const a =list[0];
+sourceObj.modifyCode(a.pos, a.end, "-");
+// console.log(ts.SyntaxKind.PlusToken);
+// console.log(obj.getSourceObject().statements)
+obj.writeTempModifiedFile(sourceObj.getModifiedSourceCode());

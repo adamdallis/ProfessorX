@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 
-export class MutationFinder {
+export class CodeInspector {
     private retrievedObjects: Array<ts.Node> = [];
     constructor(private sourceObject: ts.SourceFile) {}
 
