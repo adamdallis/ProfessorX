@@ -15,10 +15,4 @@ describe("addition function", () => {
         expect(actual).to.equal(expected);
     });
 
-    it("inputing negative 2 and 2 should return 0", () => {
-        const expected = 0;
-        const actual = hello.addNumbers(-2, 2);
-        expect(actual).to.equal(expected);
-    });
-
 });
