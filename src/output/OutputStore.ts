@@ -5,7 +5,7 @@ export class OutputStore {
     // static origionalCode: string;
     // static mutatedCode: string;
 
-    static sourceFile = "source.ts";
+    static sourceFile: Array<string> = [];
     static lineNumber = "7";
     static origionalCode = "return 3 + 4;";
     static mutatedCode = "return 3 - 4;";
