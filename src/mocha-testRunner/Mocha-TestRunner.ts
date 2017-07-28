@@ -4,14 +4,16 @@ import { IRunner, IRunnable } from "mocha";
 import { ITestResult } from "../../interfaces/ITestResult";
 import { Printer } from "../output/printer/Printer";
 import { OutputStore } from "../output/OutputStore";
+import * as fs from "fs";
 
 export class MochaTestRunner {
 
     testResult: ITestResult;
 
-    private readonly PATH: string = "C:/git/ProfessorX/testProject/src/index.spec.ts";
+    private readonly PATH: string = "C:/git/ProfessorX/testProject/src/";
     private readonly REPORT_TITLE: string = "MUTATION TEST REPORT";
-    private files: Array<string>;
+    private testFiles: Array<string> = [];
+
     private mocha = new Mocha({
         reporter: "mochawesome",
         reporterOptions: {
@@ -23,19 +25,27 @@ export class MochaTestRunner {
     private readonly printer = new Printer();
 
     run () {
-        const printer = new Printer();
         this.addFiles();
-        this.mocha.addFile(this.files[0]);
         let runner;
         runner = this.mocha.run(() => {
             const testResult: ITestResult = this.createTestResult(runner.stats);
             this.setStore(testResult);
-            printer.printSourceChanges();
+            this.printer.printSourceChanges();
         });
     }
 
+
+    isTestFile (filePath: string): boolean {
+        return filePath.indexOf(".spec") >= 0;
+    }
+
     private addFiles () {
-        this.files = [this.PATH];
+        fs.readdirSync(this.PATH).forEach((fileName) => {
+            if (this.isTestFile(fileName)) {
+                //  this.testFiles.push(this.PATH + fileName);
+                 this.mocha.addFile(this.PATH + fileName);
+            }
+        });
     }
 
     private createTestResult (stats): ITestResult {
@@ -53,7 +63,7 @@ export class MochaTestRunner {
     }
 
     private setStore (testResult: ITestResult){
-            OutputStore.sourceFile = this.files[0];
+            OutputStore.sourceFile = this.testFiles[0];
             OutputStore.numberOfPassedTests = testResult.passed;
             OutputStore.numberOfFailedTests = testResult.failed;
     }
