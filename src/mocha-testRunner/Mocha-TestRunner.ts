@@ -63,11 +63,10 @@ export class MochaTestRunner {
     }
 
     private setStore (testResult: ITestResult){
-            OutputStore.sourceFile = this.testFiles[0];
-            OutputStore.numberOfPassedTests = testResult.passed;
-            OutputStore.numberOfFailedTests = testResult.failed;
+        this.testFiles.forEach((element) => {
+            OutputStore.sourceFile = this.testFiles[element];
+        });
+        OutputStore.numberOfPassedTests = testResult.passed;
+        OutputStore.numberOfFailedTests = testResult.failed;
     }
 }
-
-const m = new MochaTestRunner();
-m.run();

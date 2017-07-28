@@ -3,7 +3,7 @@ import { HelloWorld } from "./index";
 import * as ts from "typescript";
 import { expect } from "chai";
 
-describe("addition function", () => {
+describe("Test Project addition function", () => {
     let hello: HelloWorld;
     beforeEach(() => {
         hello = new HelloWorld();
@@ -15,10 +15,10 @@ describe("addition function", () => {
         expect(actual).to.equal(expected);
     });
 
-    it("inputing negative 2 and 2 should return 0", () => {
+    it("inputing negative 2 and 2 should not return 0", () => {
         const expected = 0;
         const actual = hello.addNumbers(-2, 2);
-        expect(actual).to.equal(expected);
+        expect(actual).not.to.equal(expected);
     });
 
 });
