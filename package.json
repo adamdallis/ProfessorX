@@ -5,6 +5,7 @@
   "author": "James Read, Michael Michaelides",
   "license": "MIT",
   "dependencies": {
+    "mochawesome": "^2.3.0",
     "ntypescript": "^1.201706190042.1",
     "typescript": "^2.3.2"
   },

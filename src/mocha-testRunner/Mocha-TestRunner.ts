@@ -9,9 +9,17 @@ export class MochaTestRunner {
 
     testResult: ITestResult;
 
-    private readonly path: string = "C:/git/ProfessorX/testProject/src/index.spec.ts";
+    private readonly PATH: string = "C:/git/ProfessorX/testProject/src/index.spec.ts";
+    private readonly REPORT_TITLE: string = "MUTATION TEST REPORT";
     private files: Array<string>;
-    private mocha = new Mocha();
+    private mocha = new Mocha({
+        reporter: "mochawesome",
+        reporterOptions: {
+            autoOpen: true,
+            quiet: true,
+            reportTitle: this.REPORT_TITLE
+        }
+    });
     private readonly printer = new Printer();
 
     run () {
@@ -21,14 +29,13 @@ export class MochaTestRunner {
         let runner;
         runner = this.mocha.run(() => {
             const testResult: ITestResult = this.createTestResult(runner.stats);
-            OutputStore.numberOfPassedTests = testResult.passed;
-            OutputStore.numberOfFailedTests = testResult.failed;
+            this.setStore(testResult);
             printer.printSourceChanges();
         });
     }
 
     private addFiles () {
-        this.files = [this.path];
+        this.files = [this.PATH];
     }
 
     private createTestResult (stats): ITestResult {
@@ -43,6 +50,12 @@ export class MochaTestRunner {
             duration: stats.duration
         };
         return result;
+    }
+
+    private setStore (testResult: ITestResult){
+            OutputStore.sourceFile = this.files[0];
+            OutputStore.numberOfPassedTests = testResult.passed;
+            OutputStore.numberOfFailedTests = testResult.failed;
     }
 }
 

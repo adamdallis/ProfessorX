@@ -9,7 +9,7 @@ export class OutputStore {
     static lineNumber = "7";
     static origionalCode = "return 3 + 4;";
     static mutatedCode = "return 3 - 4;";
-    //TODO
+
     static numberOfFailedTests;
     static numberOfPassedTests;
 

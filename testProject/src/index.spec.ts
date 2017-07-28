@@ -3,7 +3,7 @@ import { HelloWorld } from "./index";
 import * as ts from "typescript";
 import { expect } from "chai";
 
-describe("Testing MutationFactory", () => {
+describe("addition function", () => {
     let hello: HelloWorld;
     beforeEach(() => {
         hello = new HelloWorld();

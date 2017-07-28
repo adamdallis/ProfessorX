@@ -32,6 +32,8 @@ export class Printer {
         + this.buildMutatedCode()
         + this.LABELS.returnToken
         + this.buildPassedTests()
+        + this.LABELS.returnToken
+        + this.buildFailedTests()
         ;
     }
 
@@ -66,6 +68,14 @@ export class Printer {
         + OutputStore.numberOfPassedTests
         + this.LABELS.returnToken
         + OutputStore.passedTestsDescription;
+    }
+
+    private buildFailedTests (): string {
+        return this.LABELS.failedTests
+        + this.LABELS.returnToken
+        + OutputStore.numberOfFailedTests
+        + this.LABELS.returnToken
+        + OutputStore.failedTestsDescription;
     }
 
     private createLeadingPrintEdge () {
