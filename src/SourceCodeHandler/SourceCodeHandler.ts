@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 
-export class SourceFileObject {
+export class SourceCodeHandler {
     private modifiedSourceCode: string = this.originalSourceObject.getText();
 
     constructor(private readonly originalSourceObject: ts.SourceFile) {}
@@ -22,6 +22,6 @@ export class SourceFileObject {
     }
 
     modifyCode( start: number, end: number, replacement: string) {
-        this.modifiedSourceCode = this.modifiedSourceCode.substring(0, start) + replacement + this.modifiedSourceCode.substring(end, this.modifiedSourceCode.length);
+        this.modifiedSourceCode = this.modifiedSourceCode.substring(0, start) + replacement + this.modifiedSourceCode.substring(end+1, this.modifiedSourceCode.length);
     }
 }
