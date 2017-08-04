@@ -1,34 +1,23 @@
-import { MochaTestRunner } from "./Mocha-TestRunner";
-import * as ts from "typescript";
 import { expect } from "chai";
+import * as Mocha from "mocha";
+
+import { MochaTestRunner } from "./Mocha-TestRunner";
+import { TestFileHandler } from "../testFileHandler/TestFileHandler";
 
 describe("Mocha-TestRunner", () => {
     let testRunner: MochaTestRunner;
     beforeEach(() => {
-        testRunner = new MochaTestRunner();
+        testRunner = new MochaTestRunner([""], new Mocha());
     });
 
-    it("a string of spec should return true", () => {
-        const testSpecFile = ".spec";
-        const actual = testRunner.isTestFile(testSpecFile);
-        expect(actual).to.equal(true);
+    it("returns false when no test files are added", () => {
+        testRunner.testFiles = [];
+        expect(testRunner.addFiles()).to.equal(false);
     });
 
-    it("a string containing .spec should return true", () => {
-        const testSpecFile = "dir/lowerDir/filename.spec.ts";
-        const actual = testRunner.isTestFile(testSpecFile);
-        expect(actual).to.equal(true);
-    });
-
-    it("a string without .spec should return false", () => {
-        const testSpecFile = "dir/lowerDir/filename.ts";
-        const actual = testRunner.isTestFile(testSpecFile);
-        expect(actual).to.equal(false);
-    });
-
-    it("a string with spec in the file name return false", () => {
-        const testSpecFile = "dir/lowerDir/Filenamespec.ts";
-        const actual = testRunner.isTestFile(testSpecFile);
-        expect(actual).to.equal(false);
+    it("returns true when a file is added", () => {
+        testRunner.testFiles = ["src/test.spec.ts"];
+        testRunner.addFiles();
+        expect(testRunner.addFiles()).to.equal(true);
     });
 });

@@ -7,9 +7,9 @@ describe("Testing CodeInspector", () => {
         let x: number = 3 + 9;
         const y: number = 11;
         const z = x+y;
-    `
+    `;
     const sourceObj = ts.createSourceFile("", code, ts.ScriptTarget.ES5, true);
-    let ci: CodeInspector = new CodeInspector(sourceObj);
+    const ci: CodeInspector = new CodeInspector(sourceObj);
 
     beforeEach(() => {
     });

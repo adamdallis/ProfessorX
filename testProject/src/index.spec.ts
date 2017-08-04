@@ -9,9 +9,9 @@ describe("Test Project addition function", () => {
         hello = new HelloWorld();
     });
 
-    it("inputing 1 and 0 should return 1", () => {
-        const expected = 1;
-        const actual = hello.addNumbers(1, 0);
+    it("inputing 1 and 1 should return 2", () => {
+        const expected = 2;
+        const actual = hello.addNumbers(1, 1);
         expect(actual).to.equal(expected);
     });
 

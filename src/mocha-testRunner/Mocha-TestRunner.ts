@@ -1,56 +1,48 @@
-//import * as data from "../../profx.conf.json";
 import * as Mocha from "mocha";
-import { IRunner, IRunnable } from "mocha";
+
 import { ITestResult } from "../../interfaces/ITestResult";
 import { Printer } from "../output/printer/Printer";
 import { OutputStore } from "../output/OutputStore";
-import * as fs from "fs";
+import { TestFileHandler } from "../testFileHandler/TestFileHandler";
+import { MochaConfig } from "./MochaConfig";
 
 export class MochaTestRunner {
 
     testResult: ITestResult;
-
-    private readonly PATH: string = "C:/git/ProfessorX/testProject/src/";
-    private readonly REPORT_TITLE: string = "MUTATION TEST REPORT";
-    private testFiles: Array<string> = [];
-
-    private mocha = new Mocha({
-        reporter: "mochawesome",
-        reporterOptions: {
-            autoOpen: true,
-            quiet: true,
-            reportTitle: this.REPORT_TITLE
-        }
-    });
+    testFiles: Array<string> = [];
+    mocha: Mocha;
     private readonly printer = new Printer();
 
+    constructor (testFiles : Array<string>, mocha: Mocha) {
+        this.mocha = mocha;
+        this.testFiles = testFiles;
+    }
+
+    addFiles (): boolean {
+        if (this.testFiles.length === 0){
+            return false;
+        }
+        for (let i = 0; i < this.testFiles.length; i++){
+            this.mocha.addFile(this.testFiles[i]);
+        }
+        return true;
+    }
+
     run () {
-        this.addFiles();
+        if (this.testFiles.length === 0 || this.testFiles === void 0) {
+            return;
+        }
         let runner;
         runner = this.mocha.run(() => {
             const testResult: ITestResult = this.createTestResult(runner.stats);
-            this.setStore(testResult);
+            OutputStore.setStore(testResult, this.testFiles);
             this.printer.printSourceChanges();
         });
     }
-
-
-    isTestFile (filePath: string): boolean {
-        return filePath.indexOf(".spec") >= 0;
-    }
-
-    private addFiles () {
-        fs.readdirSync(this.PATH).forEach((fileName) => {
-            if (this.isTestFile(fileName)) {
-                //  this.testFiles.push(this.PATH + fileName);
-                 this.mocha.addFile(this.PATH + fileName);
-            }
-        });
-    }
-
-    private createTestResult (stats): ITestResult {
+    //TODO move into create test result class
+    createTestResult (stats): ITestResult {
         if (stats === void 0){
-            throw new Error("stats is undefined");
+            throw new Error("Test result is undefined");
         }
         const result =
         {
@@ -60,13 +52,5 @@ export class MochaTestRunner {
             duration: stats.duration
         };
         return result;
-    }
-
-    private setStore (testResult: ITestResult){
-        this.testFiles.forEach((element) => {
-            OutputStore.sourceFile = this.testFiles[element];
-        });
-        OutputStore.numberOfPassedTests = testResult.passed;
-        OutputStore.numberOfFailedTests = testResult.failed;
     }
 }

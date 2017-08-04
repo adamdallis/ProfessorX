@@ -1,9 +1,6 @@
+import { ITestResult } from "../../interfaces/ItestResult";
 
 export class OutputStore {
-    // static sourceFile: string;
-    // static lineNumber: number;
-    // static origionalCode: string;
-    // static mutatedCode: string;
 
     static sourceFile: Array<string> = [];
     static lineNumber = "7";
@@ -15,4 +12,12 @@ export class OutputStore {
 
     static passedTestsDescription: Array<String> = ["description one", "description two"];
     static failedTestsDescription: Array<String> = [];
+
+    static setStore (testResult: ITestResult, testFiles: Array<string>){
+        testFiles.forEach((element) => {
+            OutputStore.sourceFile = testFiles[element];
+        });
+        OutputStore.numberOfPassedTests = testResult.passed;
+        OutputStore.numberOfFailedTests = testResult.failed;
+    }
 }
