@@ -7,16 +7,15 @@
   "dependencies": {
     "@types/node": "^8.0.17",
     "mochawesome": "^2.3.0",
-    "ntypescript": "^1.201706190042.1",
-    "@types/node": "^8.0.14",
-    "typescript": "^2.3.2"
+    "@types/node": "^8.0.17",
+    "typescript": "^2.4.2"
   },
   "devDependencies": {
     "@types/chai": "^4.0.1",
     "@types/mocha": "^2.2.41",
     "chai": "^4.1.0",
     "mocha": "^3.4.2",
-    "ts-node": "^3.2.0",
+    "ts-node": "^3.3.0",
     "tslint": "^5.5.0",
     "typings": "^2.1.1"
   },
@@ -25,7 +24,7 @@
     "test:watch": "mocha --opts ./mocha.opts --watch",
     "build": "tsc index.ts",
     "lint": "tslint ./src/**/*.ts",
-    "start": "ts-node ./src/mocha-TestRunner/Mocha-TestRunner.ts",
+    "start": "ts-node ./src/index.ts",
     "ts-node": "ts-node"
   },
   "repository": {

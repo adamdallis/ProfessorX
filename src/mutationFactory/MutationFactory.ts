@@ -1,9 +1,5 @@
-import * as ts from "typescript";
-import { SyntaxKind } from "typescript";
-
-interface IsyntaxMutationMap {
-    [syntaxKind: number]: Array<SyntaxKind>;
-}
+import {SyntaxKind} from "typescript";
+import {IsyntaxMutationMap} from "../../interfaces/IsyntaxMutationMap"
 
 export class MutationFactory {
     private syntaxMutationMap: IsyntaxMutationMap = {
@@ -14,8 +10,7 @@ export class MutationFactory {
         86: [SyntaxKind.TrueKeyword]
     };
 
-    getSingleMutation (syntaxKind: ts.SyntaxKind): number {
+    getSingleMutation (syntaxKind: SyntaxKind): number {
         return this.syntaxMutationMap[syntaxKind][0];
     }
-
 }
