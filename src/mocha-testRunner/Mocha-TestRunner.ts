@@ -4,11 +4,10 @@ import { IRunner, IRunnable } from "mocha";
 import { ITestResult } from "../../interfaces/ITestResult";
 import { Printer } from "../output/printer/Printer";
 import { OutputStore } from "../output/OutputStore";
-import * as fs from "fs";
+import { TestFileHandler } from "../testFileHandler/TestFileHandler";
 
 export class MochaTestRunner {
 
-    testDirPath = "C:/git/ProfessorX/testProject/src/";
     testResult: ITestResult;
     testFiles: Array<string> = [];
 
@@ -24,10 +23,24 @@ export class MochaTestRunner {
     });
     private readonly printer = new Printer();
 
+    constructor (fileHandler : TestFileHandler) {
+        this.testFiles = fileHandler.testFiles;
+    }
+
+    addFiles (): boolean {
+        if (this.testFiles.length === 0){
+            return false;
+        }
+        for (let i = 0; i < this.testFiles.length; i++){
+            this.mocha.addFile(this.testFiles[i]);
+        }
+        return true;
+    }
+
     run () {
-        this.addFiles(fs.readdirSync(this.testDirPath));
-        //TODO REMOVE MOCHA RUN INTO OWN FUNCTION
-        //SO THAT ADDFILES CAN ABORT TEST RUN
+        if (this.testFiles.length === 0 || this.testFiles === void 0) {
+            return;
+        }
         let runner;
         runner = this.mocha.run(() => {
             const testResult: ITestResult = this.createTestResult(runner.stats);
@@ -35,11 +48,7 @@ export class MochaTestRunner {
             this.printer.printSourceChanges();
         });
     }
-
-    isTestFile (filePath: string): boolean {
-        return filePath.indexOf(".spec") >= 0;
-    }
-
+    //TODO move into create test result class
     createTestResult (stats): ITestResult {
         if (stats === void 0){
             throw new Error("Test result is undefined");
@@ -53,17 +62,4 @@ export class MochaTestRunner {
         };
         return result;
     }
-
-    addFiles (arrayOfFileNames: Array<string>) {
-        arrayOfFileNames.forEach((fileName) => {
-            if (this.isTestFile(fileName)) {
-                this.testFiles.push(this.testDirPath + fileName);
-                this.mocha.addFile(this.testDirPath + fileName);
-            }
-        });
-        if (this.testFiles.length === 0){
-            throw new Error("Aborting Mocha test run, no test files found");
-        }
-    }
-
 }
