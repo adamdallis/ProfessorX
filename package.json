@@ -7,7 +7,6 @@
   "dependencies": {
     "@types/node": "^8.0.17",
     "mochawesome": "^2.3.0",
-    "@types/node": "^8.0.17",
     "typescript": "^2.4.2"
   },
   "devDependencies": {
