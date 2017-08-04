@@ -5,12 +5,15 @@ import { CodeInspector } from "./CodeInspector/CodeInspector";
 import { SourceCodeHandler } from "./SourceCodeHandler/SourceCodeHandler";
 
 const obj = new FileHandler();
-obj.readFile("./src/sample.ts");
+obj.readFile("./testProject/src/index.ts");
 const sourceObj = new SourceCodeHandler(obj.getSourceObject());
-const mf = new CodeInspector(obj.getSourceObject());
-const list = mf.findObjectsOfSyntaxKind(ts.SyntaxKind.PlusToken);
-const a = list[0];
-sourceObj.modifyCode(a.pos, a.end, "-");
-// console.log(ts.SyntaxKind.PlusToken);
-// console.log(obj.getSourceObject().statements)
+const codeInspector = new CodeInspector(obj.getSourceObject());
+const minusNodes = codeInspector.findObjectsOfSyntaxKind(ts.SyntaxKind.PlusToken);
+const sampleNode = minusNodes[0];
+sourceObj.modifyCode(sampleNode.pos, sampleNode.end, "-");
+// console.log(sampleNode);
 obj.writeTempModifiedFile(sourceObj.getModifiedSourceCode());
+// console.log(a.operatorToken);
+// console.log("\n\n----------------------");
+// console.log(ts.updateBinary(a, a.left, a.right, ts.SyntaxKind.PlusToken).operatorToken);
+console.log(obj.getSourceObject());

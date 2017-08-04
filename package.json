@@ -7,11 +7,10 @@
   "dependencies": {
     "@types/node": "^8.0.17",
     "mochawesome": "^2.3.0",
-    "@types/node": "^8.0.17",
     "typescript": "^2.4.2"
   },
   "devDependencies": {
-    "@types/chai": "^4.0.1",
+    "@types/chai": "^4.0.2",
     "@types/mocha": "^2.2.41",
     "chai": "^4.1.0",
     "mocha": "^3.4.2",
@@ -22,7 +21,6 @@
   "scripts": {
     "test": "mocha --opts ./mocha.opts",
     "test:watch": "mocha --opts ./mocha.opts --watch",
-    "build": "tsc index.ts",
     "lint": "tslint ./src/**/*.ts",
     "start": "ts-node ./src/index.ts",
     "ts-node": "ts-node"

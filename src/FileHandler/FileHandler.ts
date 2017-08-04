@@ -21,6 +21,6 @@ export class FileHandler {
     }
 
     writeTempModifiedFile (code: string): void {
-        fs.writeFileSync(this.path + ".temp.ts", code);
+        fs.writeFileSync(this.path + ".mutated.ts", code);
     }
 }
