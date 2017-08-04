@@ -1,29 +1,20 @@
-//import * as data from "../../profx.conf.json";
 import * as Mocha from "mocha";
-import { IRunner, IRunnable } from "mocha";
+
 import { ITestResult } from "../../interfaces/ITestResult";
 import { Printer } from "../output/printer/Printer";
 import { OutputStore } from "../output/OutputStore";
 import { TestFileHandler } from "../testFileHandler/TestFileHandler";
+import { MochaConfig } from "./MochaConfig";
 
 export class MochaTestRunner {
 
     testResult: ITestResult;
     testFiles: Array<string> = [];
-
-    private readonly REPORT_TITLE: string = "MUTATION TEST REPORT";
-
-    private mocha = new Mocha({
-        reporter: "mochawesome",
-        reporterOptions: {
-            autoOpen: true,
-            quiet: true,
-            reportTitle: this.REPORT_TITLE
-        }
-    });
+    mocha: Mocha;
     private readonly printer = new Printer();
 
-    constructor (testFiles : Array<string>) {
+    constructor (testFiles : Array<string>, mocha: Mocha) {
+        this.mocha = mocha;
         this.testFiles = testFiles;
     }
 

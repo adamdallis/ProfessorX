@@ -1,12 +1,13 @@
-import { MochaTestRunner } from "./Mocha-TestRunner";
-import * as ts from "typescript";
 import { expect } from "chai";
+import * as Mocha from "mocha";
+
+import { MochaTestRunner } from "./Mocha-TestRunner";
 import { TestFileHandler } from "../testFileHandler/TestFileHandler";
 
 describe("Mocha-TestRunner", () => {
     let testRunner: MochaTestRunner;
     beforeEach(() => {
-        testRunner = new MochaTestRunner(new TestFileHandler());
+        testRunner = new MochaTestRunner([""], new Mocha());
     });
 
     it("returns false when no test files are added", () => {
