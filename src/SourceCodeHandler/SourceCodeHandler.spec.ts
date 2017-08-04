@@ -6,9 +6,9 @@ describe("Testing SourceCodeHandler", () => {
     const code = `
         let x: number = 3 + 9;
         const y: number = 11;
-    `
+    `;
     const sourceObj = ts.createSourceFile("", code, ts.ScriptTarget.ES5, true);
-    let sch: SourceCodeHandler = new SourceCodeHandler(sourceObj);
+    const sch: SourceCodeHandler = new SourceCodeHandler(sourceObj);
 
     beforeEach(() => {
     });
@@ -17,7 +17,7 @@ describe("Testing SourceCodeHandler", () => {
         const index = sch.getOriginalSourceCode().indexOf("+");
         sch.modifyCode(index, index, "-");
         const actual = sch.getModifiedSourceCode();
-        const expected = sch.getOriginalSourceCode().replace("+","-");
+        const expected = sch.getOriginalSourceCode().replace("+", "-");
         expect(actual).to.equal(expected);
     });
 

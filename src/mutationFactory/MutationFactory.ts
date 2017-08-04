@@ -1,5 +1,5 @@
 import {SyntaxKind} from "typescript";
-import {IsyntaxMutationMap} from "../../interfaces/IsyntaxMutationMap"
+import {IsyntaxMutationMap} from "../../interfaces/IsyntaxMutationMap";
 
 export class MutationFactory {
     private syntaxMutationMap: IsyntaxMutationMap = {

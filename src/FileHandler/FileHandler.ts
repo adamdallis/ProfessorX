@@ -6,21 +6,21 @@ export class FileHandler {
     private sourceObject: ts.SourceFile;
     private path = "";
 
-    readFile(path: string) {
+    readFile (path: string) {
         this.path = path;
         this.sourceCode = fs.readFileSync(path).toString();
         this.sourceObject = ts.createSourceFile(this.path, this.sourceCode, ts.ScriptTarget.ES5, true);
     }
 
-    getSourceCode(): string {
+    getSourceCode (): string {
         return this.sourceCode;
     }
 
-    getSourceObject(): ts.SourceFile {
+    getSourceObject (): ts.SourceFile {
         return this.sourceObject;
     }
 
-    writeTempModifiedFile(code: string):void {
-        fs.writeFileSync(this.path+".temp.ts", code);
+    writeTempModifiedFile (code: string): void {
+        fs.writeFileSync(this.path + ".temp.ts", code);
     }
 }
