@@ -6,7 +6,7 @@ import { SourceCodeHandler } from "./SourceCodeHandler/SourceCodeHandler";
 import { MutationFactory } from "./mutationFactory/MutationFactory";
 
 const obj = new FileHandler();
-obj.readFile(".testProject/src/index.ts");
+obj.readFile("./testProject/src/index.ts");
 const sourceObj = new SourceCodeHandler(obj.getSourceObject());
 const mf = new CodeInspector(obj.getSourceObject());
 const list = mf.findObjectsOfSyntaxKind(ts.SyntaxKind.PlusToken);
@@ -21,3 +21,4 @@ read file
 get source object from source code handler
 code inspector
 */
+console.log(sourceObj.getModifiedSourceCode());
