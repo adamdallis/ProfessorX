@@ -4,6 +4,9 @@ import { FileHandler } from "./FileHandler/FileHandler";
 import { CodeInspector } from "./CodeInspector/CodeInspector";
 import { SourceCodeHandler } from "./SourceCodeHandler/SourceCodeHandler";
 import { MutationFactory } from "./mutationFactory/MutationFactory";
+import { MochaTestRunner } from "./mocha-TestRunner/Mocha-TestRunner";
+import { MochaConfig } from "./mocha-TestRunner/MochaConfig";
+import { TestFileHandler } from "./testFileHandler/TestFileHandler";
 
 const obj = new FileHandler();
 obj.readFile("./testProject/src/index.ts");
@@ -15,10 +18,13 @@ sourceObj.modifyCode(a.pos, a.end, MutationFactory.getSingleMutation(ts.SyntaxKi
 // console.log(ts.SyntaxKind.PlusToken);
 // console.log(obj.getSourceObject().statements)
 obj.writeTempModifiedFile(sourceObj.getModifiedSourceCode());
-
-/*
-read file
-get source object from source code handler
-code inspector
-*/
 console.log(sourceObj.getModifiedSourceCode());
+
+const fileHandler = new TestFileHandler();
+fileHandler.readTestFileDirectory();
+const testFiles = fileHandler.testFiles;
+
+const mochaConfig = new MochaConfig().mocha;
+const mochaRunner = new MochaTestRunner(testFiles, mochaConfig);
+mochaRunner.addFiles();
+mochaRunner.run();
