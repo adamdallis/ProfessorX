@@ -23,8 +23,8 @@ export class MochaTestRunner {
     });
     private readonly printer = new Printer();
 
-    constructor (fileHandler : TestFileHandler) {
-        this.testFiles = fileHandler.testFiles;
+    constructor (testFiles : Array<string>) {
+        this.testFiles = testFiles;
     }
 
     addFiles (): boolean {

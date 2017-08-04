@@ -1,3 +1,4 @@
 node_modules
 testProject/node_modules
 mochawesome-report/
+npm-debug.log

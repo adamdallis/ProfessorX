@@ -3,11 +3,17 @@ import * as fs from "fs";
 
 export class TestFileHandler {
 
-    testDirPath = "C:/git/ProfessorX/testProject/src/";
+    testDirPath = "./testProject/src/";
     testFiles: Array<string> = [];
 
     readTestFileDirectory () {
-        this.addFiles(fs.readdirSync(this.testDirPath));
+        let fileNames;
+        try{
+            fileNames = fs.readdirSync(this.testDirPath);
+        } catch (Error){
+            console.error("Could not read test files at: " + this.testDirPath);
+        }
+        this.addFiles(fileNames);
     }
 
     addFiles (arrayOfFileNames: Array<string>) {

@@ -27,9 +27,9 @@ describe("Test File Handler", () => {
     });
 
     it("when given no file names, it should throw an error", () => {
-        const fakeFileNames = [];
+        const noFileNames = [];
         expect(() => {
-            testFileHandler.addFiles(fakeFileNames);
+            testFileHandler.addFiles(noFileNames);
         }).to.throw();
     });
 
@@ -55,5 +55,25 @@ describe("Test File Handler", () => {
         const testSpecFile = "dir/lowerDir/Filenamespec.ts";
         const actual = testFileHandler.isTestFile(testSpecFile);
         expect(actual).to.equal(false);
+    });
+
+    it("should throw an error on a non existing filepath", () => {
+        testFileHandler.testDirPath = "/////not a file path.ts";
+        expect(() => {
+            testFileHandler.readTestFileDirectory();
+        }).to.throw(Error);
+    });
+    it("should throw an error on a non existing filepath", () => {
+        testFileHandler.testDirPath = "./nonexist.ts";
+        expect(() => {
+            testFileHandler.readTestFileDirectory();
+        }).to.throw(Error);
+    });
+
+    it("should not throw an error on an existing filepath", () => {
+        testFileHandler.testDirPath = "./testProject/src/";
+        expect(() => {
+            testFileHandler.readTestFileDirectory();
+        }).not.to.throw(Error);
     });
 });
