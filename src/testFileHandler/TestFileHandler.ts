@@ -1,8 +1,9 @@
 import { ITestResult } from "../../interfaces/ITestResult";
 import * as fs from "fs";
+import { FileHandler } from "../FileHandler/FileHandler";
 
 export class TestFileHandler {
-
+    
     testDirPath = "./testProject/src/";
     testFiles: Array<string> = [];
 
@@ -28,6 +29,6 @@ export class TestFileHandler {
     }
 
     isTestFile (filePath: string): boolean {
-        return filePath.indexOf(".spec") >= 0;
+        return filePath.indexOf(FileHandler.M_TEST_FILE_SUFFIX) >= 0;
     }
 }

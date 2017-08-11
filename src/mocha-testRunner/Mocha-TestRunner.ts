@@ -39,7 +39,7 @@ export class MochaTestRunner {
             this.printer.printSourceChanges();
         });
     }
-    //TODO move into create test result class
+
     createTestResult (stats): ITestResult {
         if (stats === void 0){
             throw new Error("Test result is undefined");
