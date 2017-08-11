@@ -12,6 +12,7 @@ describe("Test Project addition function", () => {
     it("inputing 1 and 1 should return 2", () => {
         const expected = 2;
         const actual = hello.addNumbers(1, 1);
+        console.log("test run");
         expect(actual).to.equal(expected);
     });
 
