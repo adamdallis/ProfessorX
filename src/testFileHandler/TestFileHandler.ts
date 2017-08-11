@@ -5,15 +5,16 @@ export class TestFileHandler {
 
     testDirPath = "./testProject/src/";
     testFiles: Array<string> = [];
+    fileNames: Array<string>;
 
-    readTestFileDirectory () {
-        let fileNames;
+    readTestFileDirectory (): boolean {
         try{
-            fileNames = fs.readdirSync(this.testDirPath);
+            this.fileNames = fs.readdirSync(this.testDirPath);
         } catch (Error){
             console.error("Could not read test files at: " + this.testDirPath);
+            return false;
         }
-        this.addFiles(fileNames);
+        return true;
     }
 
     addFiles (arrayOfFileNames: Array<string>) {

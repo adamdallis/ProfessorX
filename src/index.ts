@@ -21,9 +21,12 @@ console.log(sourceObj.getModifiedSourceCode());
 
 const fileHandler = new TestFileHandler();
 fileHandler.readTestFileDirectory();
+fileHandler.addFiles(fileHandler.fileNames);
 const testFiles = fileHandler.testFiles;
 
 const mochaConfig = new MochaConfig().mocha;
 const mochaRunner = new MochaTestRunner(testFiles, mochaConfig);
 mochaRunner.addFiles();
 mochaRunner.run();
+
+//run cleanup 

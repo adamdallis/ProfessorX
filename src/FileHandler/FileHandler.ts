@@ -1,7 +1,11 @@
 import * as ts from "typescript";
 import * as fs from "fs";
+import { GFH } from "../GlobalFileHandler/GFH";
 
 export class FileHandler {
+
+    static readonly M_TEST_FILE_SUFFIX = ".spec.m.ts";
+
     private sourceCode = "";
     private sourceObject: ts.SourceFile;
     private path = "";

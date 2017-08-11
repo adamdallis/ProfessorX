@@ -57,17 +57,13 @@ describe("Test File Handler", () => {
         expect(actual).to.equal(false);
     });
 
-    it("should throw an error on a non existing filepath", () => {
+    it("should return false an invalid filepath", () => {
         testFileHandler.testDirPath = "/////not a file path.ts";
-        expect(() => {
-            testFileHandler.readTestFileDirectory();
-        }).to.throw(Error);
+        expect(testFileHandler.readTestFileDirectory()).to.eql(false);
     });
     it("should throw an error on a non existing filepath", () => {
         testFileHandler.testDirPath = "./nonexist.ts";
-        expect(() => {
-            testFileHandler.readTestFileDirectory();
-        }).to.throw(Error);
+        expect(testFileHandler.readTestFileDirectory()).to.eql(false);
     });
 
     it("should not throw an error on an existing filepath", () => {
