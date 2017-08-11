@@ -15,8 +15,7 @@ const mf = new CodeInspector(obj.getSourceObject());
 const list = mf.findObjectsOfSyntaxKind(ts.SyntaxKind.PlusToken);
 const a = list[0];
 sourceObj.modifyCode(a.pos, a.end, MutationFactory.getSingleMutation(ts.SyntaxKind.PlusToken));
-// console.log(ts.SyntaxKind.PlusToken);
-// console.log(obj.getSourceObject().statements)
+
 obj.writeTempModifiedFile(sourceObj.getModifiedSourceCode());
 console.log(sourceObj.getModifiedSourceCode());
 

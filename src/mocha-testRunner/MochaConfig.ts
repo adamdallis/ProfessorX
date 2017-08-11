@@ -5,8 +5,8 @@ export class MochaConfig {
     readonly mocha = new Mocha({
         reporter: "mochawesome",
         reporterOptions: {
-            autoOpen: true,
-            quiet: true,
+            autoOpen: false,
+            quiet: false,
             reportTitle: this.REPORT_TITLE
         }
     });
