@@ -3,17 +3,13 @@ import * as fs from "fs";
 import { FileHandler } from "../FileHandler/FileHandler";
 
 export class TestFileHandler {
-    
+
     testDirPath = "./testProject/src/";
     testFiles: Array<string> = [];
 
     readTestFileDirectory () {
         let fileNames;
-        try{
-            fileNames = fs.readdirSync(this.testDirPath);
-        } catch (Error){
-            console.error("Could not read test files at: " + this.testDirPath);
-        }
+        fileNames = fs.readdirSync(this.testDirPath);
         this.addFiles(fileNames);
     }
 

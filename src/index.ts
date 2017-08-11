@@ -9,7 +9,7 @@ import { MochaTestRunner } from "./mocha-TestRunner/Mocha-TestRunner";
 import { MochaConfig } from "./mocha-TestRunner/MochaConfig";
 import { TestFileHandler } from "./testFileHandler/TestFileHandler";
 
-const obj = new FileHandler("./testProject/src/", "index.ts");
+const obj = new FileHandler("./testProject/src/", "HelloWorld.ts");
 const sourceObj = new SourceCodeHandler(obj.getSourceObject());
 const codeInspector = new CodeInspector(obj.getSourceObject());
 const minusNodes = codeInspector.findObjectsOfSyntaxKind(ts.SyntaxKind.PlusToken);

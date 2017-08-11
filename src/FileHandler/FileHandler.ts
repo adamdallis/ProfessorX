@@ -2,7 +2,7 @@ import * as ts from "typescript";
 import * as fs from "fs";
 
 export class FileHandler {
-    static readonly M_TEST_FILE_SUFFIX = ".m.spec.ts";
+    static readonly M_TEST_FILE_SUFFIX = ".spec.m.ts";
     static readonly M_SOURCE_FILE_SUFFIX = ".m.ts";
     private readonly FULL_PATH: string;
     private sourceCode: string;
@@ -49,10 +49,9 @@ export class FileHandler {
         return tempFilename;
     }
 
-    private mutateTestFileReference (contents: string): string {
-        contents = contents.replace(this.filename, this.filename + FileHandler.M_SOURCE_FILE_SUFFIX);
+    mutateTestFileReference (contents: string): string {
         const filenameNoExtension = this.filename.substring(0, this.filename.length - 3);
-        contents = contents.replace(filenameNoExtension, filenameNoExtension + ".ts.m");
+        contents = contents.replace("/" + filenameNoExtension, "/" + filenameNoExtension + ".ts.m");
         return contents;
     }
 
