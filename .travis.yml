@@ -10,4 +10,4 @@ before_install:
 
 script: 
 - npm test
-- npm lint
+- npm run lint
