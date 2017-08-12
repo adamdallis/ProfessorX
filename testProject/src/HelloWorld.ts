@@ -1,5 +1,5 @@
 export class HelloWorld {
-    addNumbers (a: number, b: number) {
+    public addNumbers (a: number, b: number) {
         return a + b;
     }
 }
