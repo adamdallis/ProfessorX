@@ -1,8 +1,8 @@
 import * as Mocha from "mocha";
 
 export class MochaConfig {
-    readonly REPORT_TITLE: string = "MUTATION TEST REPORT";
-    readonly mocha = new Mocha({
+    public readonly REPORT_TITLE: string = "MUTATION TEST REPORT";
+    public readonly mocha = new Mocha({
         reporter: "mochawesome",
         reporterOptions: {
             autoOpen: false,

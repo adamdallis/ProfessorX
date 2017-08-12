@@ -5,23 +5,23 @@ export class SourceCodeHandler {
 
     constructor (private readonly originalSourceObject: ts.SourceFile) {}
 
-    getOriginalSourceObject (): ts.SourceFile {
+    public getOriginalSourceObject (): ts.SourceFile {
         return this.originalSourceObject;
     }
 
-    getOriginalSourceCode (): string {
+    public getOriginalSourceCode (): string {
         return this.originalSourceObject.getText();
     }
 
-    getModifiedSourceCode (): string {
+    public getModifiedSourceCode (): string {
         return this.modifiedSourceCode;
     }
 
-    resetModified (): void {
+    public resetModified (): void {
         this.modifiedSourceCode = this.originalSourceObject.getText();
     }
 
-    modifyCode ( start: number, end: number, replacement: string) {
+    public modifyCode ( start: number, end: number, replacement: string) {
         this.modifiedSourceCode =
         this.modifiedSourceCode.substring(0, start)
         + replacement

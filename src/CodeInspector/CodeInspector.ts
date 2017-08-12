@@ -4,7 +4,7 @@ export class CodeInspector {
     private retrievedObjects: Array<ts.Node> = [];
     constructor (private sourceObject: ts.SourceFile) {}
 
-    findObjectsOfSyntaxKind (kind: ts.SyntaxKind) {
+    public findObjectsOfSyntaxKind (kind: ts.SyntaxKind) {
         this.retrievedObjects = [];
         this.findTokenObjectsOfKind(this.sourceObject, kind);
         return this.retrievedObjects;

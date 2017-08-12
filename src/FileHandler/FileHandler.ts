@@ -2,25 +2,67 @@ import * as ts from "typescript";
 import * as fs from "fs";
 
 export class FileHandler {
-    private sourceCode = "";
+    public static readonly M_TEST_FILE_SUFFIX = ".spec.m.ts";
+    public static readonly M_SOURCE_FILE_SUFFIX = ".m.ts";
+    private readonly FULL_PATH: string;
+    private sourceCode: string;
     private sourceObject: ts.SourceFile;
-    private path = "";
+    private testFileContents: string;
+    private testFileName: string;
 
-    readFile (path: string) {
-        this.path = path;
-        this.sourceCode = fs.readFileSync(path).toString();
-        this.sourceObject = ts.createSourceFile(this.path, this.sourceCode, ts.ScriptTarget.ES5, true);
+    constructor (private path: string, private filename: string) {
+        if (!(filename.substring(filename.length - 3) === ".ts")) {
+            throw new Error("Typescript files must end with .ts");
+        }
+        this.FULL_PATH = path + filename;
+        if (!fs.existsSync(this.FULL_PATH)) {
+            throw new Error("File doesn't exist");
+        }
+        this.testFileName = path + filename.substring(0, filename.length - 2) + "spec.ts";
+        if (!fs.existsSync(this.testFileName)) {
+            throw new Error("No existing test file that matches this file");
+        }
     }
 
-    getSourceCode (): string {
+    public getSourceCode (): string {
+        if (!this.sourceCode) {
+            this.sourceCode = this.readFile(this.FULL_PATH);
+        }
         return this.sourceCode;
     }
 
-    getSourceObject (): ts.SourceFile {
-        return this.sourceObject;
+    public getSourceObject (): ts.SourceFile {
+        return (this.sourceObject) ? this.sourceObject :
+            ts.createSourceFile(this.filename, this.getSourceCode (), ts.ScriptTarget.ES2015, true);
     }
 
-    writeTempModifiedFile (code: string): void {
-        fs.writeFileSync(this.path + ".mutated.ts", code);
+    public writeTempSourceModifiedFile (modifiedCode: string): string {
+        const tempFilename = this.FULL_PATH + FileHandler.M_SOURCE_FILE_SUFFIX;
+        fs.writeFileSync(tempFilename, modifiedCode);
+        return tempFilename;
+    }
+
+    public createTempTestModifiedFile (): string {
+        const updatedContents = this.mutateTestFileReference(this.getTestFileContents());
+        const tempFilename = this.FULL_PATH + FileHandler.M_TEST_FILE_SUFFIX;
+        fs.writeFileSync(tempFilename, updatedContents);
+        return tempFilename;
+    }
+
+    public mutateTestFileReference (contents: string): string {
+        const filenameNoExtension = this.filename.substring(0, this.filename.length - 3);
+        contents = contents.replace("/" + filenameNoExtension, "/" + filenameNoExtension + ".ts.m");
+        return contents;
+    }
+
+    private readFile (path: string): string {
+        return fs.readFileSync(path).toString();
+    }
+
+    private getTestFileContents (): string {
+        if (!this.testFileContents) {
+            this.testFileContents = this.readFile(this.testFileName);
+        }
+        return this.testFileContents;
     }
 }

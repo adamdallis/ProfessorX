@@ -1,22 +1,19 @@
 import { ITestResult } from "../../interfaces/ITestResult";
 import * as fs from "fs";
+import { FileHandler } from "../FileHandler/FileHandler";
 
 export class TestFileHandler {
 
-    testDirPath = "./testProject/src/";
-    testFiles: Array<string> = [];
+    public testDirPath = "./testProject/src/";
+    public testFiles: Array<string> = [];
 
-    readTestFileDirectory () {
+    public readTestFileDirectory () {
         let fileNames;
-        try{
-            fileNames = fs.readdirSync(this.testDirPath);
-        } catch (Error){
-            console.error("Could not read test files at: " + this.testDirPath);
-        }
+        fileNames = fs.readdirSync(this.testDirPath);
         this.addFiles(fileNames);
     }
 
-    addFiles (arrayOfFileNames: Array<string>) {
+    public addFiles (arrayOfFileNames: Array<string>) {
         arrayOfFileNames.forEach((fileName) => {
             if (this.isTestFile(fileName)) {
                 this.testFiles.push(this.testDirPath + fileName);
@@ -27,7 +24,7 @@ export class TestFileHandler {
         }
     }
 
-    isTestFile (filePath: string): boolean {
-        return filePath.indexOf(".spec") >= 0;
+    public isTestFile (filePath: string): boolean {
+        return filePath.indexOf(FileHandler.M_TEST_FILE_SUFFIX) >= 0;
     }
 }
