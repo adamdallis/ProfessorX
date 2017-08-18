@@ -5,7 +5,7 @@ export class Printer {
     public readonly LABELS = {
         returnToken: "\n",
         doubleSpaceToken: "  ",
-        filePath: "Mutated File Path: ",
+        filePath: "File Path: ",
         lineNumber: "On Line #: ",
         originalSource: "~~~ Source Code Changes ~~~",
         removeToken: " -- ",
@@ -38,9 +38,14 @@ export class Printer {
     }
 
     private buildSourceFilePath (): string {
-        return this.LABELS.returnToken
-        + this.LABELS.filePath
-        + OutputStore.sourceFile;
+        let sourceFilePath = "";
+        sourceFilePath =  this.LABELS.returnToken + this.LABELS.filePath;
+        OutputStore.sourceFiles.forEach((sourceFile) => {
+            sourceFilePath += this.LABELS.returnToken;
+            sourceFilePath += sourceFile;
+            sourceFilePath += this.LABELS.returnToken;
+        });
+        return sourceFilePath;
     }
 
     private buildOrigionalCode (): string {
@@ -66,16 +71,14 @@ export class Printer {
         return this.LABELS.passedTests
         + this.LABELS.returnToken
         + OutputStore.numberOfPassedTests
-        + this.LABELS.returnToken
-        + OutputStore.passedTestsDescription;
+        + this.LABELS.returnToken;
     }
 
     private buildFailedTests (): string {
         return this.LABELS.failedTests
         + this.LABELS.returnToken
         + OutputStore.numberOfFailedTests
-        + this.LABELS.returnToken
-        + OutputStore.failedTestsDescription;
+        + this.LABELS.returnToken;
     }
 
     private createLeadingPrintEdge () {

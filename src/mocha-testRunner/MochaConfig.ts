@@ -6,7 +6,7 @@ export class MochaConfig {
         reporter: "mochawesome",
         reporterOptions: {
             autoOpen: false,
-            quiet: false,
+            quiet: true,
             reportTitle: this.REPORT_TITLE
         }
     });

@@ -4,13 +4,18 @@ import { FileHandler } from "../FileHandler/FileHandler";
 
 export class TestFileHandler {
 
-    public testDirPath = "./testProject/src/";
     public testFiles: Array<string> = [];
+
+    constructor (public testDirPath) {}
 
     public readTestFileDirectory () {
         let fileNames;
         fileNames = fs.readdirSync(this.testDirPath);
-        this.addFiles(fileNames);
+        if (fileNames.length > 0){
+            this.addFiles(fileNames);
+        } else {
+            return false;
+        }
     }
 
     public addFiles (arrayOfFileNames: Array<string>) {
