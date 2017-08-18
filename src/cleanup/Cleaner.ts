@@ -19,6 +19,13 @@ export class Cleaner {
                 this.filesToDelete.push(filesFoundInDirectory[i]);
             }
         }
+        return this.filesToDelete;
+    }
+
+    public deleteMutatedFiles (filesToDelete: Array<string>) {
+        for (let i = 0; i < filesToDelete.length; i++) {
+            fs.unlinkSync(this.FILE_PATH + filesToDelete[i]);
+        }
     }
 
     public isTestFile (filePath: string): boolean {

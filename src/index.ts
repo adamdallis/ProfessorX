@@ -9,8 +9,10 @@ import { MochaTestRunner } from "./mocha-TestRunner/Mocha-TestRunner";
 import { MochaConfig } from "./mocha-TestRunner/MochaConfig";
 import { TestFileHandler } from "./testFileHandler/TestFileHandler";
 import { OutputStore } from "./output/OutputStore";
+import { Cleaner } from "./cleanup/Cleaner";
 
-const obj = new FileHandler("./testProject/src/", "HelloWorld.ts");
+const filePath = "./testProject/src/";
+const obj = new FileHandler(filePath, "HelloWorld.ts");
 const sourceObj = new SourceCodeHandler(obj.getSourceObject());
 const codeInspector = new CodeInspector(obj.getSourceObject());
 const minusNodes = codeInspector.findObjectsOfSyntaxKind(ts.SyntaxKind.PlusToken);
@@ -32,6 +34,8 @@ console.log(testFiles);
 const mochaConfig = new MochaConfig().mocha;
 const mochaRunner = new MochaTestRunner(testFiles, mochaConfig);
 mochaRunner.addFiles();
-mochaRunner.run();
+mochaRunner.run(); //ASYNC MAY CAUSE UNEXPECTED BEHAVIOUR
 
-//run cleanup
+const cleaner = new Cleaner(filePath);
+cleaner.deleteMutatedFiles(cleaner.findMutatedFiles());
+
