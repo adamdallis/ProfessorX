@@ -10,7 +10,7 @@ describe("Test File Handler", () => {
     const filename1 = "filename1" + extension;
     const filename2 = "filename2" + extension;
     beforeEach(() => {
-        testFileHandler = new TestFileHandler();
+        testFileHandler = new TestFileHandler("./testProject/src/");
     });
 
     it("when given 1 test file returns 1 filename", () => {

@@ -6,7 +6,7 @@ export class TestFileHandler {
 
     public testFiles: Array<string> = [];
 
-    constructor (private testDirPath) {}
+    constructor (public testDirPath) {}
 
     public readTestFileDirectory () {
         let fileNames;
