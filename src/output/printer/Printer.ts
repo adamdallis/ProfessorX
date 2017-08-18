@@ -2,7 +2,7 @@ import { OutputStore } from "../OutputStore";
 
 export class Printer {
 
-    private readonly LABELS = {
+    public readonly LABELS = {
         returnToken: "\n",
         doubleSpaceToken: "  ",
         filePath: "Mutated File Path: ",
@@ -17,11 +17,11 @@ export class Printer {
 
     private readonly LEADING_EDGE = "~~~~~~~~~~ Professor X ~~~~~~~~~~";
 
-    printSourceChanges () {
+    public printSourceChanges () {
         console.log(this.combineSourceChanges());
     }
 
-    combineSourceChanges (): string {
+    public combineSourceChanges (): string {
         return this.LABELS.returnToken
         + this.LEADING_EDGE
         + this.LABELS.returnToken

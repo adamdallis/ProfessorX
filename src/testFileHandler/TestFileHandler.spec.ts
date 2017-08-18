@@ -1,26 +1,32 @@
-import { TestFileHandler } from "./TestFileHandler";
 import { expect } from "chai";
+
+import { TestFileHandler } from "./TestFileHandler";
+import { FileHandler } from "../FileHandler/FileHandler";
+
+const extension = FileHandler.M_TEST_FILE_SUFFIX;
 
 describe("Test File Handler", () => {
     let testFileHandler: TestFileHandler;
+    const filename1 = "filename1" + extension;
+    const filename2 = "filename2" + extension;
     beforeEach(() => {
         testFileHandler = new TestFileHandler();
     });
 
     it("when given 1 test file returns 1 filename", () => {
-        const fakeFileNames = ["filename1.spec"];
+        const fakeFileNames = [filename1];
         testFileHandler.addFiles(fakeFileNames);
         expect(testFileHandler.testFiles.length).to.equal(1);
     });
 
     it("when given 2 test files returns 2 filenames", () => {
-        const fakeFileNames = ["filename1.spec", "filename2.spec"];
+        const fakeFileNames = [filename1, filename2];
         testFileHandler.addFiles(fakeFileNames);
         expect(testFileHandler.testFiles.length).to.equal(2);
     });
 
     it("when given 2 test files returns file names equal inputed plus origional dir path", () => {
-        const fakeFileNames = ["filename1.spec", "filename2.spec"];
+        const fakeFileNames = [filename1, filename2];
         testFileHandler.addFiles(fakeFileNames);
         expect(testFileHandler.testFiles[0]).to.equal(testFileHandler.testDirPath + fakeFileNames[0]);
         expect(testFileHandler.testFiles[1]).to.equal(testFileHandler.testDirPath + fakeFileNames[1]);
@@ -34,13 +40,12 @@ describe("Test File Handler", () => {
     });
 
     it("a string of spec should return true", () => {
-        const testSpecFile = ".spec";
-        const actual = testFileHandler.isTestFile(testSpecFile);
+        const actual = testFileHandler.isTestFile(extension);
         expect(actual).to.equal(true);
     });
 
     it("a string containing .spec should return true", () => {
-        const testSpecFile = "dir/lowerDir/filename.spec.ts";
+        const testSpecFile = "dir/lowerDir/filename.ts" + extension;
         const actual = testFileHandler.isTestFile(testSpecFile);
         expect(actual).to.equal(true);
     });
@@ -61,15 +66,10 @@ describe("Test File Handler", () => {
         testFileHandler.testDirPath = "/////not a file path.ts";
         expect(testFileHandler.readTestFileDirectory()).to.eql(false);
     });
+
     it("should throw an error on a non existing filepath", () => {
         testFileHandler.testDirPath = "./nonexist.ts";
         expect(testFileHandler.readTestFileDirectory()).to.eql(false);
     });
 
-    it("should not throw an error on an existing filepath", () => {
-        testFileHandler.testDirPath = "./testProject/src/";
-        expect(() => {
-            testFileHandler.readTestFileDirectory();
-        }).not.to.throw(Error);
-    });
 });

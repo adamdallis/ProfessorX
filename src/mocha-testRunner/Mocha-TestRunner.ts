@@ -8,9 +8,9 @@ import { MochaConfig } from "./MochaConfig";
 
 export class MochaTestRunner {
 
-    testResult: ITestResult;
-    testFiles: Array<string> = [];
-    mocha: Mocha;
+    public testResult: ITestResult;
+    public testFiles: Array<string> = [];
+    public mocha: Mocha;
     private readonly printer = new Printer();
 
     constructor (testFiles : Array<string>, mocha: Mocha) {
@@ -18,7 +18,7 @@ export class MochaTestRunner {
         this.testFiles = testFiles;
     }
 
-    addFiles (): boolean {
+    public addFiles (): boolean {
         if (this.testFiles.length === 0){
             return false;
         }
@@ -28,7 +28,7 @@ export class MochaTestRunner {
         return true;
     }
 
-    run () {
+    public run () {
         if (this.testFiles.length === 0 || this.testFiles === void 0) {
             return;
         }
@@ -40,7 +40,7 @@ export class MochaTestRunner {
         });
     }
 
-    createTestResult (stats): ITestResult {
+    public createTestResult (stats): ITestResult {
         if (stats === void 0){
             throw new Error("Test result is undefined");
         }

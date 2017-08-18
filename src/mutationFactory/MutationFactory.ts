@@ -10,7 +10,7 @@ export class MutationFactory {
         86: ["true"]
     };
 
-    static getSingleMutation (syntaxKind: SyntaxKind): string {
+    public static getSingleMutation (syntaxKind: SyntaxKind): string {
         return this.syntaxMutationMap[syntaxKind][0];
     }
 }

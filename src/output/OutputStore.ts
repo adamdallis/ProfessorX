@@ -1,19 +1,19 @@
-import { ITestResult } from "../../interfaces/ItestResult";
+import { ITestResult } from "../../interfaces/ITestResult";
 
 export class OutputStore {
 
-    static sourceFile: Array<string> = [];
-    static lineNumber = "7";
-    static origionalCode = "return 3 + 4;";
-    static mutatedCode = "return 3 - 4;";
+    public static sourceFile: Array<string> = [];
+    public static lineNumber = "7";
+    public static origionalCode = "return 3 + 4;";
+    public static mutatedCode = "return 3 - 4;";
 
-    static numberOfFailedTests;
-    static numberOfPassedTests;
+    public static numberOfFailedTests;
+    public static numberOfPassedTests;
 
-    static passedTestsDescription: Array<String> = ["description one", "description two"];
-    static failedTestsDescription: Array<String> = [];
+    public static passedTestsDescription: Array<String> = ["description one", "description two"];
+    public static failedTestsDescription: Array<String> = [];
 
-    static setStore (testResult: ITestResult, testFiles: Array<string>){
+    public static setStore (testResult: ITestResult, testFiles: Array<string>){
         testFiles.forEach((element) => {
             OutputStore.sourceFile = testFiles[element];
         });

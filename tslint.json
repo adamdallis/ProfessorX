@@ -21,7 +21,8 @@
             "private-instance-method"
          ]
         }],
-        "member-access": [true, "no-public"],
+        "eofline": true,
+        "member-access": true,
         "no-magic-numbers": false, 
         "no-reference": {"severity":"warning"},
         "no-var-requires": true,
