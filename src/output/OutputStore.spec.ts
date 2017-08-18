@@ -44,17 +44,17 @@ describe("Output Store", () => {
     });
 
     it("should set origional code to the 0th line when given char number of 20", () => {
-        OutputStore.setOrigionalSourceCode(origionalCode, 20);
+        OutputStore.setOrigionalSourceCode(origionalCode, 20, true);
         expect(OutputStore.origionalCode.toString()).to.equal(firstLine);
     });
 
     it("should set origional code to the 0th line when given char number of 0", () => {
-        OutputStore.setOrigionalSourceCode(origionalCode, 0);
+        OutputStore.setOrigionalSourceCode(origionalCode, 0, true);
         expect(OutputStore.origionalCode.toString()).to.equal(firstLine);
     });
 
     it("should set origional code to the last line when given char number of stringlength", () => {
-        OutputStore.setOrigionalSourceCode(origionalCode, origionalCode.length);
+        OutputStore.setOrigionalSourceCode(origionalCode, origionalCode.length, true);
         expect(OutputStore.origionalCode.toString()).to.equal("}");
     });
 });

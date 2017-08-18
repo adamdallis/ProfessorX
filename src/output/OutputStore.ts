@@ -31,21 +31,25 @@ export class OutputStore {
         OutputStore.lineNumber = lineNumber;
     }
 
-    public static setOrigionalSourceCode (sourceCode: string, startOfMutation: number): void {
-        OutputStore.setLineNumber(sourceCode, startOfMutation);
+    public static setOrigionalSourceCode (inputCode: string, startOfMutation: number, isOrigionalCode: boolean): void {
+        OutputStore.setLineNumber(inputCode, startOfMutation);
 
-        const origionalCode = [];
+        const code = [];
         let lineNumber = 0;
-        for (let i = 0; i < sourceCode.length; i++) {
-            if (origionalCode[lineNumber] === void 0){
-                origionalCode[lineNumber] = sourceCode.charAt(i);
+        for (let i = 0; i < inputCode.length; i++) {
+            if (code[lineNumber] === void 0){
+                code[lineNumber] = inputCode.charAt(i);
             }else{
-                origionalCode[lineNumber] += sourceCode.charAt(i);
+                code[lineNumber] += inputCode.charAt(i);
             }
-            if (sourceCode.charAt(i) === "\n"){
+            if (inputCode.charAt(i) === "\n"){
                 lineNumber ++;
             }
         }
-        OutputStore.origionalCode = origionalCode[OutputStore.lineNumber].trim();
+        if (isOrigionalCode){
+            OutputStore.origionalCode = code[OutputStore.lineNumber].trim();
+        } else {
+            OutputStore.mutatedCode = code[OutputStore.lineNumber].trim();
+        }
     }
 }

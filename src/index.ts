@@ -17,11 +17,12 @@ const minusNodes = codeInspector.findObjectsOfSyntaxKind(ts.SyntaxKind.PlusToken
 const sampleNode = minusNodes[0];
 sourceObj.modifyCode(sampleNode.pos, sampleNode.end, MutationFactory.getSingleMutation(ts.SyntaxKind.PlusToken));
 
-// OutputStore.setLineNumber(sourceObj.getOriginalSourceCode(), sampleNode.pos);
-OutputStore.setOrigionalSourceCode(sourceObj.getOriginalSourceCode(), sampleNode.pos);
 
 obj.writeTempSourceModifiedFile(sourceObj.getModifiedSourceCode());
 obj.createTempTestModifiedFile();
+
+OutputStore.setOrigionalSourceCode(sourceObj.getOriginalSourceCode(), sampleNode.pos, true);
+OutputStore.setOrigionalSourceCode(sourceObj.getModifiedSourceCode(), sampleNode.pos, false);
 
 const fileHandler = new TestFileHandler();
 fileHandler.readTestFileDirectory();
