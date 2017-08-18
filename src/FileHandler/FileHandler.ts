@@ -6,9 +6,9 @@ export class FileHandler {
 
     static readonly M_TEST_FILE_SUFFIX = ".spec.m.ts";
 
+    path = "";
     private sourceCode = "";
     private sourceObject: ts.SourceFile;
-    private path = "";
 
     readFile (path: string) {
         this.path = path;

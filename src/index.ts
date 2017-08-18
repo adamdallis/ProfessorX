@@ -29,4 +29,4 @@ const mochaRunner = new MochaTestRunner(testFiles, mochaConfig);
 mochaRunner.addFiles();
 mochaRunner.run();
 
-//run cleanup 
+//run cleanup

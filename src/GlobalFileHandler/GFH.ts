@@ -9,6 +9,4 @@ export class GFH {
     writeFile (filePath: string, fileData: string): void {
         fs.writeFileSync(filePath, fileData);
     }
-
-    
 }
