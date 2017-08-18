@@ -30,4 +30,22 @@ export class OutputStore {
         }
         OutputStore.lineNumber = lineNumber;
     }
+
+    public static setOrigionalSourceCode (sourceCode: string, startOfMutation: number): void {
+        OutputStore.setLineNumber(sourceCode, startOfMutation);
+
+        const origionalCode = [];
+        let lineNumber = 0;
+        for (let i = 0; i < sourceCode.length; i++) {
+            if (origionalCode[lineNumber] === void 0){
+                origionalCode[lineNumber] = sourceCode.charAt(i);
+            }else{
+                origionalCode[lineNumber] += sourceCode.charAt(i);
+            }
+            if (sourceCode.charAt(i) === "\n"){
+                lineNumber ++;
+            }
+        }
+        OutputStore.origionalCode = origionalCode[OutputStore.lineNumber].trim();
+    }
 }
