@@ -10,7 +10,11 @@ export class TestFileHandler {
     public readTestFileDirectory () {
         let fileNames;
         fileNames = fs.readdirSync(this.testDirPath);
-        this.addFiles(fileNames);
+        if (fileNames.length > 0){
+            this.addFiles(fileNames);
+        } else {
+            return false;
+        }
     }
 
     public addFiles (arrayOfFileNames: Array<string>) {

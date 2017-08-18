@@ -3,15 +3,15 @@ import { ITestResult } from "../../interfaces/ITestResult";
 export class OutputStore {
 
     public static sourceFile: Array<string> = [];
-    public static lineNumber = "7";
-    public static origionalCode = "return 3 + 4;";
-    public static mutatedCode = "return 3 - 4;";
+    public static lineNumber: number;
+    public static origionalCode: string;
+    public static mutatedCode: string;
 
     public static numberOfFailedTests;
     public static numberOfPassedTests;
 
-    public static passedTestsDescription: Array<String> = ["description one", "description two"];
-    public static failedTestsDescription: Array<String> = [];
+    public static passedTestsDescription: Array<String>;
+    public static failedTestsDescription: Array<String>;
 
     public static setStore (testResult: ITestResult, testFiles: Array<string>){
         testFiles.forEach((element) => {
@@ -19,5 +19,15 @@ export class OutputStore {
         });
         OutputStore.numberOfPassedTests = testResult.passed;
         OutputStore.numberOfFailedTests = testResult.failed;
+    }
+
+    public static setLineNumber (sourceCode: string, startOfMutation: number): void {
+        let lineNumber = 0;
+        for (let i = 0; i < startOfMutation; i++) {
+            if (sourceCode.charAt(i) === "\n"){
+                lineNumber ++;
+            }
+        }
+        OutputStore.lineNumber = lineNumber;
     }
 }

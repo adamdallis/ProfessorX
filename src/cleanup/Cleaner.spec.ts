@@ -10,12 +10,9 @@ describe("Cleaner", () => {
     const testFileDir = "./testProject/src/";
     beforeEach(() => {
         cleaner = new Cleaner(testFileDir);
-        fileHandler = new FileHandler();
-        fileHandler.path = testFileDir + "HelloWorld";
-        fileHandler.writeTempModifiedFile("CODECODECODE");
     });
 
-    it("should find an array of files ending in the testfile suffix", () => {
+    it("finds no files when there are none with the M test file suffix", () => {
         cleaner.findMutatedTestFiles();
         //expect().to.equal(false);
     });
