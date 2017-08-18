@@ -3,17 +3,26 @@ import * as fs from "fs";
 import { FileHandler } from "../FileHandler/FileHandler";
 
 export class Cleaner {
-    public static readonly fileExtensionToRemove = FileHandler.M_TEST_FILE_SUFFIX;
+    public readonly fileExtensionToRemove = FileHandler.M_SOURCE_FILE_SUFFIX;
     public readonly FILE_PATH;
-    public filesToDelete: Array<string>;
+    public filesToDelete: Array<string> = [];
 
     constructor (filePath: string) {
         this.FILE_PATH = filePath;
     }
 
-    public findMutatedTestFiles () {
-        this.filesToDelete = fs.readdirSync(this.FILE_PATH);
-        console.log(this.filesToDelete);
+    public findMutatedFiles () {
+        const filesFoundInDirectory = fs.readdirSync(this.FILE_PATH);
+
+        for (let i = 0; i < filesFoundInDirectory.length; i++){
+            if (this.isTestFile(filesFoundInDirectory[i])){
+                this.filesToDelete.push(filesFoundInDirectory[i]);
+            }
+        }
+    }
+
+    public isTestFile (filePath: string): boolean {
+        return filePath.indexOf(this.fileExtensionToRemove) >= 0;
     }
 
 }
