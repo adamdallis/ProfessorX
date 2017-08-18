@@ -23,7 +23,7 @@ export class MochaTestRunner {
             return false;
         }
         for (let i = 0; i < this.testFiles.length; i++){
-            this.mocha.addFile(this.testFiles[0]);
+            this.mocha.addFile(this.testFiles[i]);
         }
         return true;
     }

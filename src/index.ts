@@ -12,7 +12,9 @@ import { OutputStore } from "./output/OutputStore";
 import { Cleaner } from "./cleanup/Cleaner";
 
 const filePath = "./testProject/src/";
-const obj = new FileHandler(filePath, "HelloWorld.ts");
+const fileToMutate = "HelloWorld.ts";
+
+const obj = new FileHandler(filePath, fileToMutate);
 const sourceObj = new SourceCodeHandler(obj.getSourceObject());
 const codeInspector = new CodeInspector(obj.getSourceObject());
 const minusNodes = codeInspector.findObjectsOfSyntaxKind(ts.SyntaxKind.PlusToken);
@@ -26,11 +28,10 @@ obj.createTempTestModifiedFile();
 OutputStore.setOrigionalSourceCode(sourceObj.getOriginalSourceCode(), sampleNode.pos, true);
 OutputStore.setOrigionalSourceCode(sourceObj.getModifiedSourceCode(), sampleNode.pos, false);
 
-const fileHandler = new TestFileHandler();
+const fileHandler = new TestFileHandler(filePath);
 fileHandler.readTestFileDirectory();
-fileHandler.addFiles(fileHandler.testFiles);
 const testFiles = fileHandler.testFiles;
-console.log(testFiles);
+
 const mochaConfig = new MochaConfig().mocha;
 const mochaRunner = new MochaTestRunner(testFiles, mochaConfig);
 mochaRunner.addFiles();

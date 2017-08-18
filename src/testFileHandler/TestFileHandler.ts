@@ -4,8 +4,9 @@ import { FileHandler } from "../FileHandler/FileHandler";
 
 export class TestFileHandler {
 
-    public testDirPath = "./testProject/src/";
     public testFiles: Array<string> = [];
+
+    constructor (private testDirPath) {}
 
     public readTestFileDirectory () {
         let fileNames;
