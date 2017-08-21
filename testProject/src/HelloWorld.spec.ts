@@ -10,9 +10,13 @@ describe("Test Project addition function", () => {
     });
 
     it("inputting 1 and 1 should return 2", () => {
-        const expected = 2;
         const actual = hello.addNumbers(1, 1);
-        expect(actual).to.equal(expected);
+        expect(actual).to.equal(2);
+    });
+
+    it("inputting 1, 1 and 1 should return 3", () => {
+        const actual = hello.addThreeNumbers(1, 1, 1);
+        expect(actual).to.equal(3);
     });
 
 });
