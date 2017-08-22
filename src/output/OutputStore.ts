@@ -10,6 +10,8 @@ export class OutputStore {
     public static numberOfFailedTests;
     public static numberOfPassedTests;
 
+    public static mutationScore;
+
     public static setNumberOfTests (testResult: ITestResult, testFiles: Array<string>){
         OutputStore.numberOfPassedTests = testResult.passed;
         OutputStore.numberOfFailedTests = testResult.failed;
@@ -49,5 +51,10 @@ export class OutputStore {
         } else {
             OutputStore.mutatedCode = code[OutputStore.lineNumber].trim();
         }
+    }
+
+    public static setMutationScore (passedTests: number, failedTests: number) {
+        const totalTestsRan = passedTests + failedTests;
+        OutputStore.mutationScore = Math.round((failedTests / totalTestsRan) * 100);
     }
 }

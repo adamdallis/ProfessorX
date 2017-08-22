@@ -57,4 +57,19 @@ describe("Output Store", () => {
         OutputStore.setOrigionalSourceCode(origionalCode, origionalCode.length, true);
         expect(OutputStore.origionalCode.toString()).to.equal("}");
     });
+
+    it("should set mutation score to 100 when given 0, 1", () => {
+        OutputStore.setMutationScore(0, 1);
+        expect(OutputStore.mutationScore).to.equal(100);
+    });
+
+    it("should set mutation score to 0 when given 1, 0", () => {
+        OutputStore.setMutationScore(1, 0);
+        expect(OutputStore.mutationScore).to.equal(0);
+    });
+
+    it("should set mutation score to 66.6 when given 1, 2", () => {
+        OutputStore.setMutationScore(1, 2);
+        expect(OutputStore.mutationScore).to.equal(67);
+    });
 });
