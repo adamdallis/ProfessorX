@@ -9,10 +9,12 @@ export class Printer {
         lineNumber: "On Line #: ",
         originalSource: "~~~ Source Code Changes ~~~",
         removeToken: " -- ",
-        mutatedSource: "--- Mutated Source Code ---",
         addToken: " ++ ",
+        endSourceChanges: "~~~ End of Source Code Changes ~~~",
         passedTests: "Tests Passed (Mutants)",
-        failedTests: "Tests Failed (Killed Mutants)"
+        failedTests: "Tests Failed (Killed Mutants)",
+        mutationScore: "Mutation Score: ",
+        percentage: " %"
     };
 
     private readonly LEADING_EDGE = "~~~~~~~~~~ Professor X ~~~~~~~~~~";
@@ -27,13 +29,21 @@ export class Printer {
         + this.LABELS.returnToken
         + this.buildSourceFilePath()
         + this.LABELS.returnToken
+        + this.LABELS.originalSource
+        + this.LABELS.returnToken
         + this.buildOrigionalCode()
         + this.LABELS.returnToken
         + this.buildMutatedCode()
         + this.LABELS.returnToken
+        + this.LABELS.returnToken
+        + this.LABELS.endSourceChanges
+        + this.LABELS.returnToken
+        + this.LABELS.returnToken
         + this.buildPassedTests()
         + this.LABELS.returnToken
         + this.buildFailedTests()
+        + this.LABELS.returnToken
+        + this.buildMutationScore()
         ;
     }
 
@@ -49,8 +59,7 @@ export class Printer {
     }
 
     private buildOrigionalCode (): string {
-        return this.LABELS.originalSource
-        + this.LABELS.returnToken
+        return this.LABELS.returnToken
         + this.LABELS.lineNumber
         + OutputStore.lineNumber
         + this.LABELS.doubleSpaceToken
@@ -79,6 +88,15 @@ export class Printer {
         + this.LABELS.returnToken
         + OutputStore.numberOfFailedTests
         + this.LABELS.returnToken;
+    }
+
+    private buildMutationScore (): string {
+        return this.LABELS.mutationScore
+        + this.LABELS.doubleSpaceToken
+        + OutputStore.mutationScore
+        + this.LABELS.percentage
+        + this.LABELS.returnToken
+        ;
     }
 
     private createLeadingPrintEdge () {

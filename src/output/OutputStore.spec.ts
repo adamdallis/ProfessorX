@@ -2,6 +2,7 @@ import { expect } from "chai";
 import * as Mocha from "mocha";
 
 import { OutputStore } from "./OutputStore";
+import { ITestResult } from "../../interfaces/ITestResult";
 
 describe("Output Store", () => {
     const origionalCode = `export class HelloWorld {
@@ -9,8 +10,20 @@ describe("Output Store", () => {
         return a + b;
     }
 }`;
+    let testResult: ITestResult;
     const firstLine = "export class HelloWorld {";
     beforeEach(() => {
+        testResult = {passed: "0", failed: "2", totalRan: "0", duration: "20"};
+    });
+
+    it("ITestResult.passed of 0 should set passed tests to 0", () => {
+        OutputStore.setNumberOfTests(testResult);
+        expect(OutputStore.numberOfPassedTests).to.equal(0);
+    });
+
+    it("ITestResult.failed of 2 should set passed tests to 2", () => {
+        OutputStore.setNumberOfTests(testResult);
+        expect(OutputStore.numberOfFailedTests).to.equal(2);
     });
 
     it("should set line number to 0 for a character number of 20", () => {
@@ -68,7 +81,7 @@ describe("Output Store", () => {
         expect(OutputStore.mutationScore).to.equal(0);
     });
 
-    it("should set mutation score to 66.6 when given 1, 2", () => {
+    it("should set mutation score to 67 when given 1, 2", () => {
         OutputStore.setMutationScore(1, 2);
         expect(OutputStore.mutationScore).to.equal(67);
     });

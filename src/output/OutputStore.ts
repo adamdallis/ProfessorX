@@ -12,9 +12,10 @@ export class OutputStore {
 
     public static mutationScore;
 
-    public static setNumberOfTests (testResult: ITestResult, testFiles: Array<string>){
-        OutputStore.numberOfPassedTests = testResult.passed;
-        OutputStore.numberOfFailedTests = testResult.failed;
+    public static setNumberOfTests (testResult: ITestResult){
+        OutputStore.numberOfPassedTests = parseInt(testResult.passed, 0);
+        OutputStore.numberOfFailedTests = parseInt(testResult.failed, 0);
+        this.setMutationScore(OutputStore.numberOfPassedTests, OutputStore.numberOfFailedTests);
     }
 
     public static setMutatedSourceFile (sourceFile: string) {
