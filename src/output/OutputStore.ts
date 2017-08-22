@@ -10,13 +10,13 @@ export class OutputStore {
     public static numberOfFailedTests;
     public static numberOfPassedTests;
 
-    public static passedTestsDescription: Array<String>;
-    public static failedTestsDescription: Array<String>;
-
-    public static setStore (testResult: ITestResult, testFiles: Array<string>){
-        OutputStore.sourceFiles = testFiles;
+    public static setNumberOfTests (testResult: ITestResult, testFiles: Array<string>){
         OutputStore.numberOfPassedTests = testResult.passed;
         OutputStore.numberOfFailedTests = testResult.failed;
+    }
+
+    public static setMutatedSourceFile (sourceFile: string) {
+        OutputStore.sourceFiles.push(sourceFile);
     }
 
     public static setLineNumber (sourceCode: string, startOfMutation: number): void {
