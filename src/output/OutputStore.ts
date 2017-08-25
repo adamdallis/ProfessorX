@@ -2,7 +2,7 @@ import { ITestResult } from "../../interfaces/ITestResult";
 
 export class OutputStore {
 
-    public static sourceFiles: Array<string> = [];
+    public static sourceFile: string;
     public static lineNumber: number;
     public static origionalCode: string;
     public static mutatedCode: string;
@@ -13,14 +13,17 @@ export class OutputStore {
     public static passedTestsDescription: Array<String>;
     public static failedTestsDescription: Array<String>;
 
-    public static setStore (testResult: ITestResult, testFiles: Array<string>){
-        OutputStore.sourceFiles = testFiles;
+    public static setTests (testResult: ITestResult){
         OutputStore.numberOfPassedTests = testResult.passed;
         OutputStore.numberOfFailedTests = testResult.failed;
     }
 
+    public static setSourceFile (file: string){
+        OutputStore.sourceFile = file;
+    }
+
     public static setLineNumber (sourceCode: string, startOfMutation: number): void {
-        let lineNumber = 0;
+        let lineNumber = 1;
         for (let i = 0; i < startOfMutation; i++) {
             if (sourceCode.charAt(i) === "\n"){
                 lineNumber ++;
@@ -33,7 +36,7 @@ export class OutputStore {
         OutputStore.setLineNumber(inputCode, startOfMutation);
 
         const code = [];
-        let lineNumber = 0;
+        let lineNumber = 1;
         for (let i = 0; i < inputCode.length; i++) {
             if (code[lineNumber] === void 0){
                 code[lineNumber] = inputCode.charAt(i);
