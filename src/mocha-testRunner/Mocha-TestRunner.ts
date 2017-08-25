@@ -14,7 +14,7 @@ export class MochaTestRunner {
     }
 
     public addFiles (): boolean {
-        if (this.testFiles.length === 0){
+        if (this.testFiles.length === 0) {
             return false;
         }
         for (let i = 0; i < this.testFiles.length; i++){

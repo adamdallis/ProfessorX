@@ -9,6 +9,7 @@ export class FileHandler {
     private sourceObject: ts.SourceFile;
     private testFileContents: string;
     private testFileName: string;
+    private counter = 0;
 
     constructor (private path: string, private filename: string) {
         if (!(filename.substring(filename.length - 3) === ".ts")) {
@@ -38,20 +39,20 @@ export class FileHandler {
 
     public createTempTestModifiedFile (): string {
         const updatedContents = this.mutateTestFileReference(this.getTestFileContents());
-        const tempFilename = this.FULL_PATH + FileHandler.M_TEST_FILE_SUFFIX;
+        const tempFilename = this.FULL_PATH + this.counter++ + FileHandler.M_TEST_FILE_SUFFIX;
         fs.writeFileSync(tempFilename, updatedContents);
         return tempFilename;
     }
 
     public writeTempSourceModifiedFile (modifiedCode: string): string {
-        const tempFilename = this.FULL_PATH + FileHandler.M_SOURCE_FILE_SUFFIX;
+        const tempFilename = this.FULL_PATH + this.counter + FileHandler.M_SOURCE_FILE_SUFFIX;
         fs.writeFileSync(tempFilename, modifiedCode);
         return tempFilename;
     }
 
     public mutateTestFileReference (contents: string): string {
         const filenameNoExtension = this.filename.substring(0, this.filename.length - 3);
-        contents = contents.replace("/" + filenameNoExtension, "/" + filenameNoExtension + ".ts.m");
+        contents = contents.replace("/" + filenameNoExtension, "/" + filenameNoExtension + ".ts" + this.counter + ".m");
         return contents;
     }
 
