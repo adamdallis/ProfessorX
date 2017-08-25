@@ -20,7 +20,7 @@ export class OutputStore {
     }
 
     public static setLineNumber (sourceCode: string, startOfMutation: number): void {
-        let lineNumber = 0;
+        let lineNumber = 1;
         for (let i = 0; i < startOfMutation; i++) {
             if (sourceCode.charAt(i) === "\n"){
                 lineNumber ++;
@@ -33,7 +33,7 @@ export class OutputStore {
         OutputStore.setLineNumber(inputCode, startOfMutation);
 
         const code = [];
-        let lineNumber = 0;
+        let lineNumber = 1;
         for (let i = 0; i < inputCode.length; i++) {
             if (code[lineNumber] === void 0){
                 code[lineNumber] = inputCode.charAt(i);
