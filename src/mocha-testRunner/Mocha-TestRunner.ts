@@ -4,7 +4,6 @@ import { ITestResult } from "../../interfaces/ITestResult";
 import { Printer } from "../output/printer/Printer";
 import { OutputStore } from "../output/OutputStore";
 import { TestFileHandler } from "../testFileHandler/TestFileHandler";
-import { MochaConfig } from "./MochaConfig";
 
 export class MochaTestRunner {
 
@@ -13,8 +12,8 @@ export class MochaTestRunner {
     public mocha: Mocha;
     private readonly printer = new Printer();
 
-    constructor (testFiles : Array<string>, mocha: Mocha) {
-        this.mocha = mocha;
+    constructor (testFiles : Array<string>, config: Object) {
+        this.mocha = new Mocha(config);
         this.testFiles = testFiles;
     }
 
