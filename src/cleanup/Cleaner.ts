@@ -29,7 +29,7 @@ export class Cleaner {
     }
 
     public isTestFile (filePath: string): boolean {
-        return filePath.indexOf(this.fileExtensionToRemove) >= 0;
+        return filePath.substring(filePath.length - this.fileExtensionToRemove.length) === this.fileExtensionToRemove;
     }
 
 }

@@ -2,8 +2,8 @@ import * as ts from "typescript";
 import * as fs from "fs";
 
 export class FileHandler {
-    public static readonly M_TEST_FILE_SUFFIX = ".spec.m.ts";
     public static readonly M_SOURCE_FILE_SUFFIX = ".m.ts";
+    public static readonly M_TEST_FILE_SUFFIX = ".spec" + FileHandler.M_SOURCE_FILE_SUFFIX;
     private readonly FULL_PATH: string;
     private sourceCode: string;
     private sourceObject: ts.SourceFile;
