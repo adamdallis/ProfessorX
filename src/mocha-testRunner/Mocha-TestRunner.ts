@@ -29,13 +29,13 @@ export class MochaTestRunner {
     }
 
     public run () {
-        if (this.testFiles.length === 0 || this.testFiles === void 0) {
+        if (this.testFiles.length === 0) {
             return;
         }
         let runner;
         runner = this.mocha.run(() => {
             const testResult: ITestResult = this.createTestResult(runner.stats);
-            OutputStore.setStore(testResult, this.testFiles);
+            OutputStore.setTests(testResult, this.testFiles);
             this.printer.printSourceChanges();
         });
     }

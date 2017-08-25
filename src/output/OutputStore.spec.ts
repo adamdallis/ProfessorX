@@ -1,6 +1,6 @@
 import { expect } from "chai";
-import * as Mocha from "mocha";
 
+import { ITestResult } from "../../interfaces/ITestResult";
 import { OutputStore } from "./OutputStore";
 
 describe("Output Store", () => {
@@ -10,7 +10,29 @@ describe("Output Store", () => {
     }
 }`;
     const firstLine = "export class HelloWorld {";
+    const testResult: ITestResult = {
+        passed : "1",
+        failed : "2",
+        totalRan : "3",
+        duration : "20"
+    };
+
     beforeEach(() => {
+    });
+
+    it("should set the number of passed tests to 1", () => {
+        OutputStore.setTests(testResult);
+        expect(OutputStore.numberOfPassedTests).to.equal("1");
+    });
+
+    it("should set the source file to ./sourceFile.ts", () => {
+        OutputStore.setSourceFile("./sourceFile.ts");
+        expect(OutputStore.sourceFile).to.equal("./sourceFile.ts");
+    });
+
+    it("should set the number of failed tests to 2", () => {
+        OutputStore.setTests(testResult);
+        expect(OutputStore.numberOfFailedTests).to.equal("2");
     });
 
     it("should set line number to 1 for a character number of 20", () => {

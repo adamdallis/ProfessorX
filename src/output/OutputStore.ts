@@ -2,7 +2,7 @@ import { ITestResult } from "../../interfaces/ITestResult";
 
 export class OutputStore {
 
-    public static sourceFiles: Array<string> = [];
+    public static sourceFile: string;
     public static lineNumber: number;
     public static origionalCode: string;
     public static mutatedCode: string;
@@ -13,10 +13,13 @@ export class OutputStore {
     public static passedTestsDescription: Array<String>;
     public static failedTestsDescription: Array<String>;
 
-    public static setStore (testResult: ITestResult, testFiles: Array<string>){
-        OutputStore.sourceFiles = testFiles;
+    public static setTests (testResult: ITestResult){
         OutputStore.numberOfPassedTests = testResult.passed;
         OutputStore.numberOfFailedTests = testResult.failed;
+    }
+
+    public static setSourceFile (file: string){
+        OutputStore.sourceFile = file;
     }
 
     public static setLineNumber (sourceCode: string, startOfMutation: number): void {

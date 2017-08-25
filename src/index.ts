@@ -13,7 +13,7 @@ import { Cleaner } from "./cleanup/Cleaner";
 
 const filePath = "./testProject/src/";
 const fileToMutate = "HelloWorld.ts";
-
+OutputStore.setSourceFile(filePath + fileToMutate);
 const obj = new FileHandler(filePath, fileToMutate);
 const sourceObj = new SourceCodeHandler(obj.getSourceObject());
 const codeInspector = new CodeInspector(obj.getSourceObject());
