@@ -35,7 +35,7 @@ export class MochaTestRunner {
         let runner;
         runner = this.mocha.run(() => {
             const testResult: ITestResult = this.createTestResult(runner.stats);
-            OutputStore.setTests(testResult, this.testFiles);
+            OutputStore.setTests(testResult);
             this.printer.printSourceChanges();
         });
     }
