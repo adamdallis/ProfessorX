@@ -7,15 +7,18 @@ export class Printer {
         doubleSpaceToken: "  ",
         filePath: "File Path: ",
         lineNumber: "On Line #: ",
-        originalSource: "~~~ Source Code Changes ~~~",
+        originalSource: "~~~~~~ Source Code Changes ~~~~~~",
         removeToken: " -- ",
-        mutatedSource: "--- Mutated Source Code ---",
+        mutatedSource: "~~~~~~ Mutated Source Code ~~~~~~",
         addToken: " ++ ",
-        passedTests: "Tests Passed (Mutants)",
+        testResults: "~~~~~~ Test Results ~~~~~~",
+        passedTests: "Tests Passed (Survived Mutants)",
         failedTests: "Tests Failed (Killed Mutants)"
     };
-
     private readonly LEADING_EDGE = "~~~~~~~~~~ Professor X ~~~~~~~~~~";
+
+    constructor (private outputStore: OutputStore) {
+    }
 
     public printSourceChanges () {
         console.log(this.combineSourceChanges());
@@ -40,10 +43,9 @@ export class Printer {
     private buildSourceFilePath (): string {
         let sourceFilePath = "";
         sourceFilePath =  this.LABELS.returnToken + this.LABELS.filePath;
-        OutputStore.sourceFiles.forEach((sourceFile) => {
+        this.outputStore.sourceFilePaths.forEach((sourceFile) => {
             sourceFilePath += this.LABELS.returnToken;
             sourceFilePath += sourceFile;
-            sourceFilePath += this.LABELS.returnToken;
         });
         return sourceFilePath;
     }
@@ -52,32 +54,37 @@ export class Printer {
         return this.LABELS.originalSource
         + this.LABELS.returnToken
         + this.LABELS.lineNumber
-        + OutputStore.lineNumber
+        + this.outputStore.lineNumber
         + this.LABELS.doubleSpaceToken
-        + OutputStore.origionalCode
-        + this.LABELS.removeToken;
+        + this.outputStore.origionalCode
+        + this.LABELS.removeToken
+        + this.LABELS.returnToken;
     }
 
     private buildMutatedCode (): string {
-        return this.LABELS.returnToken
+        return this.LABELS.mutatedSource
+        + this.LABELS.returnToken
         + this.LABELS.lineNumber
-        + OutputStore.lineNumber
+        + this.outputStore.lineNumber
         + this.LABELS.doubleSpaceToken
-        + OutputStore.mutatedCode
-        + this.LABELS.addToken;
+        + this.outputStore.mutatedCode
+        + this.LABELS.addToken
+        + this.LABELS.returnToken;
     }
 
     private buildPassedTests (): string {
-        return this.LABELS.passedTests
+        return this.LABELS.testResults
         + this.LABELS.returnToken
-        + OutputStore.numberOfPassedTests
+        + this.LABELS.passedTests
+        + ": "
+        + this.outputStore.numberOfPassedTests
         + this.LABELS.returnToken;
     }
 
     private buildFailedTests (): string {
         return this.LABELS.failedTests
-        + this.LABELS.returnToken
-        + OutputStore.numberOfFailedTests
+        + ": "
+        + this.outputStore.numberOfFailedTests
         + this.LABELS.returnToken;
     }
 

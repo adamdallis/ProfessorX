@@ -1,17 +1,12 @@
 import * as Mocha from "mocha";
 
 import { ITestResult } from "../../interfaces/ITestResult";
-import { Printer } from "../output/printer/Printer";
-import { OutputStore } from "../output/OutputStore";
-import { TestFileHandler } from "../testFileHandler/TestFileHandler";
-import { MochaConfig } from "./MochaConfig";
 
 export class MochaTestRunner {
 
     public testResult: ITestResult;
     public testFiles: Array<string> = [];
     public mocha: Mocha;
-    private readonly printer = new Printer();
 
     constructor (testFiles : Array<string>, mocha: Mocha) {
         this.mocha = mocha;
@@ -28,15 +23,14 @@ export class MochaTestRunner {
         return true;
     }
 
-    public run () {
+    public run (callback: Function) {
         if (this.testFiles.length === 0 || this.testFiles === void 0) {
             return;
         }
         let runner;
         runner = this.mocha.run(() => {
             const testResult: ITestResult = this.createTestResult(runner.stats);
-            OutputStore.setStore(testResult, this.testFiles);
-            this.printer.printSourceChanges();
+            callback(testResult, this.testFiles);
         });
     }
 
