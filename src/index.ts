@@ -6,15 +6,14 @@ import { CodeInspector } from "./CodeInspector/CodeInspector";
 import { SourceCodeHandler } from "./SourceCodeHandler/SourceCodeHandler";
 import { MutationFactory } from "./mutationFactory/MutationFactory";
 import { MochaTestRunner } from "./mocha-TestRunner/Mocha-TestRunner";
-import { MochaConfig } from "./mocha-TestRunner/MochaConfig";
+import { ConfigManager } from "./configManager/ConfigManager";
 import { TestFileHandler } from "./testFileHandler/TestFileHandler";
 import { OutputStore } from "./output/OutputStore";
 import { Cleaner } from "./cleanup/Cleaner";
 
-const filePath = "./testProject/src/";
-const fileToMutate = "HelloWorld.ts";
-OutputStore.setSourceFile(filePath + fileToMutate);
-const obj = new FileHandler(filePath, fileToMutate);
+const config = new ConfigManager();
+OutputStore.setSourceFile(config.filePath + config.fileToMutate);
+const obj = new FileHandler(config.filePath, config.fileToMutate);
 const sourceObj = new SourceCodeHandler(obj.getSourceObject());
 const codeInspector = new CodeInspector(obj.getSourceObject());
 const minusNodes = codeInspector.findObjectsOfSyntaxKind(ts.SyntaxKind.PlusToken);
@@ -28,15 +27,14 @@ obj.createTempTestModifiedFile();
 OutputStore.setOrigionalSourceCode(sourceObj.getOriginalSourceCode(), sampleNode.pos, true);
 OutputStore.setOrigionalSourceCode(sourceObj.getModifiedSourceCode(), sampleNode.pos, false);
 
-const fileHandler = new TestFileHandler(filePath);
+const fileHandler = new TestFileHandler(config.filePath);
 fileHandler.readTestFileDirectory();
 const testFiles = fileHandler.testFiles;
 
-const mochaConfig = new MochaConfig().mocha;
-const mochaRunner = new MochaTestRunner(testFiles, mochaConfig);
+const mochaRunner = new MochaTestRunner(testFiles, config.runnerConfig);
 mochaRunner.addFiles();
 mochaRunner.run(); //ASYNC MAY CAUSE UNEXPECTED BEHAVIOUR
 
-const cleaner = new Cleaner(filePath);
+const cleaner = new Cleaner(config.filePath);
 cleaner.deleteMutatedFiles(cleaner.findMutatedFiles());
 
