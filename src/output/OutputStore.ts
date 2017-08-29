@@ -2,7 +2,7 @@ import { ITestResult } from "../../interfaces/ITestResult";
 
 export class OutputStore {
 
-    public sourceFilePaths: Array<string> = [];
+    public testFilePath: string;
     public lineNumber: number;
     public origionalCode: string;
     public mutatedCode: string;
@@ -13,8 +13,10 @@ export class OutputStore {
     public passedTestsDescription: Array<String>;
     public failedTestsDescription: Array<String>;
 
-    public setStore (testResult: ITestResult, testFiles: Array<string>){
-        this.sourceFilePaths = testFiles;
+    public setTestFile (filename: string) {
+        this.testFilePath = filename;
+    }
+    public setScores (testResult: ITestResult){
         this.numberOfPassedTests = testResult.passed;
         this.numberOfFailedTests = testResult.failed;
     }

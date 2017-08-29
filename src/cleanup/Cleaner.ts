@@ -28,6 +28,13 @@ export class Cleaner {
         }
     }
 
+    public deleteTestFile (filePath: string) {
+        if (!this.isTestFile(filePath)) {
+            throw new Error(`${filePath} is not a mutated test file. Aborting...`);
+        }
+        fs.unlinkSync(filePath);
+    }
+
     public isTestFile (filePath: string): boolean {
         return filePath.substring(filePath.length - this.fileExtensionToRemove.length) === this.fileExtensionToRemove;
     }

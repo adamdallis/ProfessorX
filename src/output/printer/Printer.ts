@@ -43,10 +43,8 @@ export class Printer {
     private buildSourceFilePath (): string {
         let sourceFilePath = "";
         sourceFilePath =  this.LABELS.returnToken + this.LABELS.filePath;
-        this.outputStore.sourceFilePaths.forEach((sourceFile) => {
-            sourceFilePath += this.LABELS.returnToken;
-            sourceFilePath += sourceFile;
-        });
+        sourceFilePath += this.LABELS.returnToken;
+        sourceFilePath += this.outputStore.testFilePath;
         return sourceFilePath;
     }
 
